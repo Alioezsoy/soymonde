@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Monogram, Wordmark } from "@/components/Logo";
-import { PageIntro } from "@/components/PageIntro";
-import { Reveal } from "@/components/Reveal";
 import { getTexts } from "@/lib/locale";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -9,26 +7,17 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t.about.label };
 }
 
-// PLACEHOLDER story — to be written properly in a later step.
+// Deliberately quiet for now. The story is added later.
 export default async function AboutPage() {
   const { t } = await getTexts();
   return (
-    <>
-      <PageIntro label={t.about.label} title={t.about.title}>
-        <p>{t.home.manifesto}</p>
-      </PageIntro>
-
-      <section className="grid items-center gap-16 px-5 pb-32 md:grid-cols-2 md:gap-10 md:px-10 md:pb-56">
-        <Reveal className="flex flex-col items-center gap-10 bg-ink px-8 py-24 md:py-40">
-          <Monogram tone="white" className="w-40 md:w-56" />
-          <Wordmark tone="white" className="w-40 md:w-56" />
-        </Reveal>
-        <Reveal className="max-w-md space-y-6 text-lg font-light leading-relaxed md:justify-self-center">
-          <p>{t.about.p1}</p>
-          <p className="text-stone-deep">{t.about.p2}</p>
-          <p className="text-stone-deep">{t.about.placeholder}</p>
-        </Reveal>
-      </section>
-    </>
+    <section data-header-dark className="flex min-h-svh flex-col items-center justify-center bg-ink px-5 text-center text-bone">
+      <Monogram tone="white" className="w-[min(40vw,14rem)]" />
+      <Wordmark tone="white" className="mt-10 w-[min(50vw,16rem)]" />
+      <p className="label mt-12 max-w-xs leading-loose text-bone/70">{t.about.line}</p>
+      <p className="coord mt-6 text-bone/50">
+        {t.base.place} · {t.base.coordinates}
+      </p>
+    </section>
   );
 }

@@ -40,6 +40,45 @@
     U+2C60-2C7F, U+A720-A7FF;
 }
 
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/instrument-serif-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/instrument-serif-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+    U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/instrument-serif-latin-400-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/instrument-serif-latin-ext-400-italic.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+    U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+
 /* SOYMONDE — design tokens.
    Three colours only: bone, ink, stone. */
 @theme inline {
@@ -49,6 +88,7 @@
   --color-stone-deep: #6b655c; /* stone, dark enough for small text on bone */
   --color-rule: #d2ccc1; /* hairlines on bone */
   --font-sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Instrument Serif", "Times New Roman", serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   --ease-slow: cubic-bezier(0.2, 0.6, 0.2, 1);
 }
@@ -95,10 +135,12 @@ body {
     font-variant-numeric: tabular-nums;
   }
 
+  /* Large editorial headings. */
   .display {
-    font-weight: 300;
-    letter-spacing: -0.01em;
-    line-height: 1.08;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 0.95;
     text-wrap: balance;
   }
 
@@ -201,5 +243,94 @@ body {
   }
   html {
     scroll-behavior: auto;
+  }
+}
+
+/* Opening curtain: shown once per visit, then lifts. */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  background: var(--color-ink);
+  pointer-events: none;
+  animation: intro-lift 1.2s var(--ease-slow) 1.5s both;
+}
+.intro img {
+  width: min(30vw, 9rem);
+  animation: intro-mark 1.3s var(--ease-slow) both;
+}
+.intro-seen .intro {
+  display: none;
+}
+@keyframes intro-mark {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes intro-lift {
+  to {
+    transform: translateY(-100%);
+    visibility: hidden;
+  }
+}
+
+/* Thin line that travels down: scroll hint. */
+.scroll-hint {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 3rem;
+  overflow: hidden;
+  background: color-mix(in srgb, currentColor 25%, transparent);
+}
+.scroll-hint::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  animation: scroll-hint 2.4s var(--ease-slow) infinite;
+}
+@keyframes scroll-hint {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* Horizontal rails without a visible scrollbar. */
+.rail {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+/* Product tile: second image fades in on hover (devices with a mouse). */
+.swap-second {
+  opacity: 0;
+  transition: opacity 0.9s var(--ease-slow);
+}
+@media (hover: hover) {
+  .group:hover .swap-second {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro {
+    display: none;
+  }
+  .scroll-hint::after {
+    animation: none;
   }
 }

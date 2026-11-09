@@ -3,20 +3,27 @@
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import type { Dictionary } from "@/content/dictionaries";
+import { openCart, useCart } from "@/lib/cart";
 import { href, type Locale } from "@/lib/i18n";
+import { CartDrawer } from "./CartDrawer";
 import { LanguageSwitch } from "./LanguageSwitch";
 import { Monogram, Wordmark } from "./Logo";
 
 export function Header({
   lang,
   t,
+  cart,
   coordinates,
 }: {
   lang: Locale;
   t: Dictionary["nav"];
+  cart: Dictionary["cart"];
   coordinates: string;
 }) {
   const [open, setOpen] = useState(false);
+  // true while a dark image or section sits behind the bar
+  const [onDark, setOnDark] = useState(false);
+  const count = useCart().reduce((sum, line) => sum + line.quantity, 0);
 
   const nav = [
     { href: href(lang, "/shop"), label: t.shop },
@@ -24,7 +31,34 @@ export function Header({
     { href: href(lang, "/about"), label: t.about },
     { href: href(lang, "/contact"), label: t.contact },
   ];
-  const bag = `${t.bag} (0)`;
+  const bag = `${t.bag} (${count})`;
+
+  useEffect(() => {
+    let frame = 0;
+    const check = () => {
+      frame = 0;
+      const dark = Array.from(document.querySelectorAll("[data-header-dark]")).some((el) => {
+        const r = el.getBoundingClientRect();
+        return r.top <= 32 && r.bottom >= 32;
+      });
+      setOnDark(dark);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(check);
+    };
+    schedule();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    // page changes alter the page height: re-check then, too
+    const observer = new ResizeObserver(schedule);
+    observer.observe(document.body);
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      observer.disconnect();
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -38,12 +72,15 @@ export function Header({
 
   return (
     <>
-      {/* The bar inverts against whatever is behind it:
-          white on dark images, black on bone. */}
-      <header className="fixed inset-x-0 top-0 z-40 text-white mix-blend-difference">
+      {/* Clear with light text over dark images, bone with dark text everywhere else. */}
+      <header
+        className={`fixed inset-x-0 top-0 z-40 transition-colors duration-700 ease-slow ${
+          onDark ? "bg-transparent text-bone" : "bg-bone/85 text-ink backdrop-blur-md"
+        }`}
+      >
         <div className="flex h-16 items-center justify-between px-5 md:h-20 md:px-10">
           <Link href={href(lang)} aria-label={t.home} className="-m-2 p-2">
-            <Monogram tone="white" className="h-9 w-auto md:h-10" />
+            <Monogram tone={onDark ? "white" : "black"} className="h-9 w-auto md:h-10" />
           </Link>
 
           <nav aria-label={t.menu} className="hidden items-center gap-9 lg:flex">
@@ -52,18 +89,18 @@ export function Header({
                 {item.label}
               </Link>
             ))}
-            <Link href={href(lang, "/cart")} className="label link-line">
+            <button type="button" onClick={openCart} className="label link-line">
               {bag}
-            </Link>
+            </button>
             <Suspense>
               <LanguageSwitch lang={lang} label={t.language} className="ml-2" />
             </Suspense>
           </nav>
 
           <div className="flex items-center gap-6 lg:hidden">
-            <Link href={href(lang, "/cart")} className="label -my-3 py-3">
+            <button type="button" onClick={openCart} className="label -my-3 py-3">
               {bag}
-            </Link>
+            </button>
             <button
               type="button"
               className="label -m-3 p-3"
@@ -76,6 +113,8 @@ export function Header({
           </div>
         </div>
       </header>
+
+      <CartDrawer lang={lang} t={cart} closeLabel={t.close} />
 
       {/* Full-screen menu (phone and tablet) */}
       <div
@@ -103,7 +142,7 @@ export function Header({
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className={`display text-[2.75rem] transition-all duration-1000 ease-slow ${
+              className={`display text-6xl transition-all duration-1000 ease-slow ${
                 open ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
               }`}
               style={{ transitionDelay: open ? `${120 + i * 90}ms` : "0ms" }}

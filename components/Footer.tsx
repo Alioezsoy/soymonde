@@ -46,7 +46,7 @@ export async function Footer() {
         <Wordmark tone="white" className="w-full" />
         <div className="mt-8 flex justify-between gap-6 text-stone">
           <span className="coord">© Soymonde</span>
-          <span className="coord text-right">{t.footer.tagline}</span>
+          <span className="coord text-right">{t.base.coordinates}</span>
         </div>
       </div>
     </footer>

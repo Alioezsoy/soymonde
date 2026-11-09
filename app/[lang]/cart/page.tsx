@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { PageIntro } from "@/components/PageIntro";
-import { href } from "@/lib/i18n";
+import { CartLines } from "@/components/CartLines";
 import { getTexts } from "@/lib/locale";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -9,16 +7,12 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t.cart.label };
 }
 
-// Step 2: the real cart (Shopify) replaces this page.
 export default async function CartPage() {
   const { lang, t } = await getTexts();
   return (
-    <div className="pb-32 md:pb-56">
-      <PageIntro label={t.cart.label} title={t.cart.title}>
-        <Link href={href(lang, "/shop")} className="label link-line">
-          {t.cart.continue}
-        </Link>
-      </PageIntro>
-    </div>
+    <section className="mx-auto flex min-h-[70svh] max-w-2xl flex-col px-5 pb-32 pt-36 md:pb-48 md:pt-48">
+      <h1 className="label mb-6 text-stone-deep">{t.cart.label}</h1>
+      <CartLines lang={lang} t={t.cart} />
+    </section>
   );
 }

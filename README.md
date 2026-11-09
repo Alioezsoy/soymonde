@@ -25,6 +25,7 @@ Die Seite gibt es auf Englisch (`/en`), Deutsch (`/de`) und Türkisch (`/tr`). W
 | Kollektionen / Kapitel (SM-001 …), Texte, Bilder | `content/chapters.ts` |
 | Allgemeine Texte in allen drei Sprachen (Navigation, Manifest, About …) | `content/dictionaries.ts` |
 | Platzhalter-Produkte (bis Shopify angebunden ist) | `content/products.ts` |
+| Warenkorb-Logik (später Shopify) | `lib/cart.ts` |
 | Logos | Dateien in `public/logos`, Dateinamen in `lib/brand.ts` |
 | Farben, Schrift, Übergänge | `app/globals.css` |
 

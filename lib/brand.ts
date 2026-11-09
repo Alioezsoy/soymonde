@@ -2,6 +2,7 @@
 // To swap a logo: drop the new file into public/logos and change the name here.
 export const logos = {
   monogramWhite: "/logos/monogram-white.svg",
+  monogramBone: "/logos/monogram-bone.svg", // page colour, used for the opening zoom
   monogramBlack: "/logos/monogram-black.svg",
   wordmarkWhite: "/logos/wordmark-white.svg",
   wordmarkBlack: "/logos/wordmark-black.svg",

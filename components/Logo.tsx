@@ -1,13 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import { logos } from "@/lib/brand";
 
-type Props = { className?: string; tone?: "white" | "black" };
+type Props = { className?: string; tone?: "white" | "black" | "bone" };
 
 /** The gothic SM monogram — the street voice. */
 export function Monogram({ className = "", tone = "black" }: Props) {
   return (
     <img
-      src={tone === "white" ? logos.monogramWhite : logos.monogramBlack}
+      src={
+        tone === "white" ? logos.monogramWhite : tone === "bone" ? logos.monogramBone : logos.monogramBlack
+      }
       alt="SM"
       className={className}
       draggable={false}

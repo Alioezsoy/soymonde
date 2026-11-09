@@ -10,16 +10,14 @@ import { getTexts } from "@/lib/locale";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getTexts();
-  return { title: t.archive.label, description: t.archive.intro };
+  return { title: t.archive.label };
 }
 
 export default async function ArchivePage() {
   const { lang, t } = await getTexts();
   return (
     <>
-      <PageIntro label={t.archive.label} title={t.archive.title}>
-        <p>{t.archive.intro}</p>
-      </PageIntro>
+      <PageIntro label={t.archive.label} title={t.archive.title} />
 
       <section className="px-5 pb-20 md:px-10 md:pb-32">
         <Reveal>
@@ -27,7 +25,7 @@ export default async function ArchivePage() {
         </Reveal>
       </section>
 
-      <div className="space-y-28 px-5 pb-32 md:space-y-52 md:px-10 md:pb-56">
+      <div className="space-y-24 px-5 pb-32 md:space-y-48 md:px-10 md:pb-56">
         {chaptersNewestFirst.map((c, i) => {
           const flip = i % 2 === 1;
           return (
@@ -46,10 +44,7 @@ export default async function ArchivePage() {
                   </div>
                   <div className={`md:col-span-4 md:pb-2 ${flip ? "md:order-1" : ""}`}>
                     <p className="coord">{c.number}</p>
-                    <h2 className="display mt-3 text-5xl md:mt-5 md:text-7xl">{c.title}</h2>
-                    <p className="mt-5 max-w-sm font-light leading-relaxed text-stone-deep md:mt-8">
-                      {c.summary[lang]}
-                    </p>
+                    <h2 className="display mt-3 text-7xl md:mt-5 md:text-[8vw]">{c.title}</h2>
                     <dl className="mt-6 space-y-2 border-t border-rule pt-5 md:mt-10">
                       <div className="flex justify-between gap-4">
                         <dt className="label text-stone-deep">{t.archive.place}</dt>
@@ -66,7 +61,7 @@ export default async function ArchivePage() {
                         <dd className="coord">{c.year}</dd>
                       </div>
                     </dl>
-                    <span className="label link-line mt-8 inline-block">{t.home.enterChapter}</span>
+                    <span className="label link-line mt-8 inline-block">{t.home.discover}</span>
                   </div>
                 </Link>
               </article>
