@@ -1,12 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { site } from "@/content/site";
+import { Suspense, useEffect, useState } from "react";
+import type { Dictionary } from "@/content/dictionaries";
+import { href, type Locale } from "@/lib/i18n";
+import { LanguageSwitch } from "./LanguageSwitch";
 import { Monogram, Wordmark } from "./Logo";
 
-export function Header() {
+export function Header({
+  lang,
+  t,
+  coordinates,
+}: {
+  lang: Locale;
+  t: Dictionary["nav"];
+  coordinates: string;
+}) {
   const [open, setOpen] = useState(false);
+
+  const nav = [
+    { href: href(lang, "/shop"), label: t.shop },
+    { href: href(lang, "/archive"), label: t.archive },
+    { href: href(lang, "/about"), label: t.about },
+    { href: href(lang, "/contact"), label: t.contact },
+  ];
+  const bag = `${t.bag} (0)`;
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -24,24 +42,27 @@ export function Header() {
           white on dark images, black on bone. */}
       <header className="fixed inset-x-0 top-0 z-40 text-white mix-blend-difference">
         <div className="flex h-16 items-center justify-between px-5 md:h-20 md:px-10">
-          <Link href="/" aria-label="SOYMONDE — home" className="-m-2 p-2">
-            <Monogram tone="white" className="h-6 w-auto md:h-7" />
+          <Link href={href(lang)} aria-label={t.home} className="-m-2 p-2">
+            <Monogram tone="white" className="h-9 w-auto md:h-10" />
           </Link>
 
-          <nav aria-label="Main" className="hidden items-center gap-10 md:flex">
-            {site.nav.map((item) => (
+          <nav aria-label={t.menu} className="hidden items-center gap-9 lg:flex">
+            {nav.map((item) => (
               <Link key={item.href} href={item.href} className="label link-line">
                 {item.label}
               </Link>
             ))}
-            <Link href="/cart" className="label link-line">
-              Bag (0)
+            <Link href={href(lang, "/cart")} className="label link-line">
+              {bag}
             </Link>
+            <Suspense>
+              <LanguageSwitch lang={lang} label={t.language} className="ml-2" />
+            </Suspense>
           </nav>
 
-          <div className="flex items-center gap-6 md:hidden">
-            <Link href="/cart" className="label -my-3 py-3">
-              Bag (0)
+          <div className="flex items-center gap-6 lg:hidden">
+            <Link href={href(lang, "/cart")} className="label -my-3 py-3">
+              {bag}
             </Link>
             <button
               type="button"
@@ -50,34 +71,34 @@ export function Header() {
               aria-controls="site-menu"
               onClick={() => setOpen(true)}
             >
-              Menu
+              {t.menu}
             </button>
           </div>
         </div>
       </header>
 
-      {/* Full-screen menu (mobile) */}
+      {/* Full-screen menu (phone and tablet) */}
       <div
         id="site-menu"
         role="dialog"
         aria-modal="true"
-        aria-label="Menu"
+        aria-label={t.menu}
         inert={!open}
-        className={`fixed inset-0 z-50 flex flex-col bg-bone text-ink transition-opacity duration-700 ease-slow md:hidden ${
+        className={`fixed inset-0 z-50 flex flex-col bg-bone text-ink transition-opacity duration-700 ease-slow lg:hidden ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
-        <div className="flex h-16 items-center justify-between px-5">
-          <Link href="/" onClick={() => setOpen(false)} aria-label="SOYMONDE — home" className="-m-2 p-2">
-            <Monogram className="h-6 w-auto" />
+        <div className="flex h-16 items-center justify-between px-5 md:h-20 md:px-10">
+          <Link href={href(lang)} onClick={() => setOpen(false)} aria-label={t.home} className="-m-2 p-2">
+            <Monogram className="h-9 w-auto md:h-10" />
           </Link>
           <button type="button" className="label -m-3 p-3" onClick={() => setOpen(false)}>
-            Close
+            {t.close}
           </button>
         </div>
 
-        <nav aria-label="Menu" className="flex flex-1 flex-col justify-center gap-5 px-5">
-          {site.nav.map((item, i) => (
+        <nav aria-label={t.menu} className="flex flex-1 flex-col justify-center gap-5 px-5 md:px-10">
+          {nav.map((item, i) => (
             <Link
               key={item.href}
               href={item.href}
@@ -90,11 +111,19 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          <Suspense>
+            <LanguageSwitch
+              lang={lang}
+              label={t.language}
+              onNavigate={() => setOpen(false)}
+              className="mt-8 gap-6"
+            />
+          </Suspense>
         </nav>
 
-        <div className="flex items-end justify-between px-5 pb-8">
+        <div className="flex items-end justify-between px-5 pb-8 md:px-10">
           <Wordmark className="w-36" />
-          <span className="coord text-stone-deep">{site.base.coordinates}</span>
+          <span className="coord text-stone-deep">{coordinates}</span>
         </div>
       </div>
     </>

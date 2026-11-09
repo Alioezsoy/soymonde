@@ -5,23 +5,25 @@ import { Plate } from "@/components/Plate";
 import { Reveal } from "@/components/Reveal";
 import { WorldLine } from "@/components/WorldLine";
 import { chaptersNewestFirst } from "@/content/chapters";
-import { site } from "@/content/site";
+import { href } from "@/lib/i18n";
+import { getTexts } from "@/lib/locale";
 
-export const metadata: Metadata = {
-  title: "Archive",
-  description: site.archiveIntro,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getTexts();
+  return { title: t.archive.label, description: t.archive.intro };
+}
 
-export default function ArchivePage() {
+export default async function ArchivePage() {
+  const { lang, t } = await getTexts();
   return (
     <>
-      <PageIntro label="Archive" title="The World">
-        <p>{site.archiveIntro}</p>
+      <PageIntro label={t.archive.label} title={t.archive.title}>
+        <p>{t.archive.intro}</p>
       </PageIntro>
 
       <section className="px-5 pb-20 md:px-10 md:pb-32">
         <Reveal>
-          <WorldLine chapters={chaptersNewestFirst} />
+          <WorldLine chapters={chaptersNewestFirst} lang={lang} t={t.archive} />
         </Reveal>
       </section>
 
@@ -32,7 +34,7 @@ export default function ArchivePage() {
             <Reveal key={c.slug}>
               <article>
                 <Link
-                  href={`/archive/${c.slug}`}
+                  href={href(lang, `/archive/${c.slug}`)}
                   className="group grid gap-6 md:grid-cols-12 md:items-end md:gap-10"
                 >
                   <div className={`md:col-span-8 ${flip ? "md:order-2" : ""}`}>
@@ -46,25 +48,25 @@ export default function ArchivePage() {
                     <p className="coord">{c.number}</p>
                     <h2 className="display mt-3 text-5xl md:mt-5 md:text-7xl">{c.title}</h2>
                     <p className="mt-5 max-w-sm font-light leading-relaxed text-stone-deep md:mt-8">
-                      {c.summary}
+                      {c.summary[lang]}
                     </p>
                     <dl className="mt-6 space-y-2 border-t border-rule pt-5 md:mt-10">
                       <div className="flex justify-between gap-4">
-                        <dt className="label text-stone-deep">Place</dt>
+                        <dt className="label text-stone-deep">{t.archive.place}</dt>
                         <dd className="label text-right">
-                          {c.place}, {c.country}
+                          {c.place[lang]}, {c.country[lang]}
                         </dd>
                       </div>
                       <div className="flex justify-between gap-4">
-                        <dt className="label text-stone-deep">Position</dt>
+                        <dt className="label text-stone-deep">{t.archive.position}</dt>
                         <dd className="coord">{c.coordinates}</dd>
                       </div>
                       <div className="flex justify-between gap-4">
-                        <dt className="label text-stone-deep">Year</dt>
+                        <dt className="label text-stone-deep">{t.archive.year}</dt>
                         <dd className="coord">{c.year}</dd>
                       </div>
                     </dl>
-                    <span className="label link-line mt-8 inline-block">Enter chapter</span>
+                    <span className="label link-line mt-8 inline-block">{t.home.enterChapter}</span>
                   </div>
                 </Link>
               </article>

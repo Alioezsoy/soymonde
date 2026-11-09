@@ -5,6 +5,8 @@ import { Suspense } from "react";
 import { Plate } from "@/components/Plate";
 import { Reveal } from "@/components/Reveal";
 import { chapters, getChapter, type Block } from "@/content/chapters";
+import { href, type Locale } from "@/lib/i18n";
+import { getTexts } from "@/lib/locale";
 
 export function generateStaticParams() {
   return chapters.map((c) => ({ slug: c.slug }));
@@ -12,17 +14,18 @@ export function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}: PageProps<"/archive/[slug]">): Promise<Metadata> {
+}: PageProps<"/[lang]/archive/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const chapter = getChapter(slug);
   if (!chapter) return {};
+  const { lang } = await getTexts();
   return {
     title: `${chapter.number} ${chapter.title}`,
-    description: chapter.summary,
+    description: chapter.summary[lang],
   };
 }
 
-function BlockView({ block }: { block: Block }) {
+function BlockView({ block, lang }: { block: Block; lang: Locale }) {
   switch (block.layout) {
     case "full":
       return <Plate frame={block.frames[0]} className="aspect-[4/5] md:aspect-[16/9]" showCaption />;
@@ -55,13 +58,13 @@ function BlockView({ block }: { block: Block }) {
     case "text":
       return (
         <p className="display mx-auto max-w-3xl py-8 text-center text-3xl md:py-20 md:text-5xl">
-          {block.text}
+          {block.text[lang]}
         </p>
       );
   }
 }
 
-export default function ChapterPage({ params }: PageProps<"/archive/[slug]">) {
+export default function ChapterPage({ params }: PageProps<"/[lang]/archive/[slug]">) {
   return (
     <Suspense fallback={<div className="h-svh bg-ink" />}>
       <ChapterView params={params} />
@@ -69,10 +72,11 @@ export default function ChapterPage({ params }: PageProps<"/archive/[slug]">) {
   );
 }
 
-async function ChapterView({ params }: { params: PageProps<"/archive/[slug]">["params"] }) {
+async function ChapterView({ params }: { params: PageProps<"/[lang]/archive/[slug]">["params"] }) {
   const { slug } = await params;
   const chapter = getChapter(slug);
   if (!chapter) notFound();
+  const { lang, t } = await getTexts();
 
   const index = chapters.indexOf(chapter);
   const next = chapters[(index + 1) % chapters.length];
@@ -88,7 +92,7 @@ async function ChapterView({ params }: { params: PageProps<"/archive/[slug]">["p
           <h1 className="display mt-3 text-6xl md:mt-5 md:text-[9rem]">{chapter.title}</h1>
           <div className="mt-6 flex items-end justify-between md:mt-10">
             <span className="label">
-              {chapter.place}, {chapter.country}
+              {chapter.place[lang]}, {chapter.country[lang]}
             </span>
             <span className="coord text-bone/70">{chapter.coordinates}</span>
           </div>
@@ -99,22 +103,22 @@ async function ChapterView({ params }: { params: PageProps<"/archive/[slug]">["p
       <section className="grid gap-10 px-5 py-24 md:grid-cols-12 md:px-10 md:py-48">
         <dl className="space-y-2 md:col-span-3">
           <div className="flex justify-between gap-4 md:block">
-            <dt className="label text-stone-deep">Chapter</dt>
+            <dt className="label text-stone-deep">{t.archive.chapter}</dt>
             <dd className="coord md:mt-1">{chapter.number}</dd>
           </div>
           <div className="flex justify-between gap-4 md:block md:pt-4">
-            <dt className="label text-stone-deep">Position</dt>
+            <dt className="label text-stone-deep">{t.archive.position}</dt>
             <dd className="coord md:mt-1">{chapter.coordinates}</dd>
           </div>
           <div className="flex justify-between gap-4 md:block md:pt-4">
-            <dt className="label text-stone-deep">Year</dt>
+            <dt className="label text-stone-deep">{t.archive.year}</dt>
             <dd className="coord md:mt-1">{chapter.year}</dd>
           </div>
         </dl>
         <Reveal className="space-y-6 text-xl font-light leading-relaxed md:col-span-7 md:col-start-5 md:text-3xl md:leading-snug">
           {chapter.intro.map((p, i) => (
             <p key={i} className={i > 0 ? "text-stone-deep" : ""}>
-              {p}
+              {p[lang]}
             </p>
           ))}
         </Reveal>
@@ -124,16 +128,16 @@ async function ChapterView({ params }: { params: PageProps<"/archive/[slug]">["p
       <section className="space-y-3 px-5 md:space-y-5 md:px-10">
         {chapter.blocks.map((block, i) => (
           <Reveal key={i} className={block.layout.startsWith("offset") ? "py-12 md:py-28" : ""}>
-            <BlockView block={block} />
+            <BlockView block={block} lang={lang} />
           </Reveal>
         ))}
       </section>
 
       {/* Next chapter */}
-      <nav aria-label="Next chapter" className="px-5 py-32 md:px-10 md:py-56">
-        <Link href={`/archive/${next.slug}`} className="group block border-t border-rule pt-8">
+      <nav aria-label={t.archive.nextChapter} className="px-5 py-32 md:px-10 md:py-56">
+        <Link href={href(lang, `/archive/${next.slug}`)} className="group block border-t border-rule pt-8">
           <div className="flex items-baseline justify-between">
-            <span className="label text-stone-deep">Next chapter</span>
+            <span className="label text-stone-deep">{t.archive.nextChapter}</span>
             <span className="coord text-stone-deep">{next.coordinates}</span>
           </div>
           <p className="mt-6 flex flex-wrap items-baseline gap-x-6 gap-y-2">

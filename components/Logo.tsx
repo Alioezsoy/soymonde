@@ -15,14 +15,13 @@ export function Monogram({ className = "", tone = "black" }: Props) {
   );
 }
 
-/** The clean, wide-set SOYMONDE wordmark — the couture voice.
-    Only a white file exists; on light backgrounds it is inverted. */
+/** The clean, wide-set SOYMONDE wordmark — the couture voice. */
 export function Wordmark({ className = "", tone = "black" }: Props) {
   return (
     <img
-      src={logos.wordmarkWhite}
+      src={tone === "white" ? logos.wordmarkWhite : logos.wordmarkBlack}
       alt="SOYMONDE"
-      className={`${tone === "black" ? "invert" : ""} ${className}`}
+      className={className}
       draggable={false}
     />
   );
