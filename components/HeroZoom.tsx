@@ -73,7 +73,7 @@ export function HeroZoom({
 
         <div ref={fade} className="absolute inset-0">
           <div className="absolute inset-x-0 top-[calc(50%+min(24vw,19svh,10.5rem)+2.5rem)] flex justify-center md:top-[calc(50%+min(24vw,19svh,10.5rem)+3.5rem)]">
-            <Wordmark tone="white" className="w-[min(50vw,19rem)]" />
+            <Wordmark tone="white" className="w-[min(44vw,15rem)]" />
           </div>
           <div className="absolute inset-x-5 bottom-6 flex items-end justify-between md:inset-x-10 md:bottom-9">
             <Link href={chapterHref} className="coord link-line">

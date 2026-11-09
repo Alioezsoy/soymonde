@@ -162,7 +162,7 @@ export function Header({
         </nav>
 
         <div className="flex items-end justify-between px-5 pb-8 md:px-10">
-          <Wordmark className="w-36" />
+          <Wordmark className="w-28" />
           <span className="coord text-stone-deep">{coordinates}</span>
         </div>
       </div>
