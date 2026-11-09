@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Monogram, Wordmark } from "@/components/Logo";
+import { HeroZoom } from "@/components/HeroZoom";
 import { getTexts } from "@/lib/locale";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -7,17 +7,19 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t.about.label };
 }
 
-// Deliberately quiet for now. The story is added later.
+// The brand moment lives here: the monogram opening, then one quiet line.
+// The story is added later.
 export default async function AboutPage() {
   const { t } = await getTexts();
   return (
-    <section data-header-dark className="flex min-h-svh flex-col items-center justify-center bg-ink px-5 text-center text-bone">
-      <Monogram tone="white" className="w-[min(40vw,14rem)]" />
-      <Wordmark tone="white" className="mt-10 w-[min(44vw,13rem)]" />
-      <p className="label mt-12 max-w-xs leading-loose text-bone/70">{t.about.line}</p>
-      <p className="coord mt-6 text-bone/50">
-        {t.base.place} · {t.base.coordinates}
-      </p>
-    </section>
+    <>
+      <HeroZoom coordinates={t.base.coordinates} scrollLabel={t.nav.scroll} />
+      <section className="flex min-h-[70svh] flex-col items-center justify-center px-5 pb-32 text-center">
+        <p className="label max-w-xs leading-loose">{t.about.line}</p>
+        <p className="coord mt-6 text-stone-deep">
+          {t.base.place} · {t.base.coordinates}
+        </p>
+      </section>
+    </>
   );
 }

@@ -9,17 +9,20 @@ export function ProductCard({
   lang,
   soldOutLabel,
   sizes = "(min-width: 768px) 33vw, 50vw",
+  priority = false,
 }: {
   product: Product;
   lang: Locale;
   soldOutLabel: string;
   sizes?: string;
+  /** load the image early: for tiles visible when the page opens */
+  priority?: boolean;
 }) {
   const soldOut = product.sizes.every((s) => !s.available);
   return (
     <Link href={href(lang, `/shop/${product.handle}`)} className="group block">
       <div className="relative">
-        <Plate frame={product.frames[0]} className="aspect-[3/4]" sizes={sizes} />
+        <Plate frame={product.frames[0]} className="aspect-[3/4]" sizes={sizes} priority={priority} />
         {product.frames[1] ? (
           <div className="swap-second absolute inset-0">
             <Plate frame={product.frames[1]} className="h-full" sizes={sizes} />
@@ -37,14 +40,14 @@ export function ProductCard({
           </span>
         )}
       </div>
-      <div className="mt-3 flex items-start justify-between gap-3 md:mt-4">
-        <div>
+      <div className="mt-3 md:mt-4 md:flex md:items-start md:justify-between md:gap-3">
+        <div className="min-w-0">
           <p className="text-sm md:text-base">{product.title}</p>
-          <p className="coord mt-1 text-stone-deep">
+          <p className="coord mt-1 truncate text-stone-deep">
             {product.colour[lang]} · {product.chapter}
           </p>
         </div>
-        <p className="coord shrink-0 pt-1">{formatPrice(product.price)}</p>
+        <p className="coord mt-1 shrink-0 md:mt-0 md:pt-1">{formatPrice(product.price)}</p>
       </div>
     </Link>
   );

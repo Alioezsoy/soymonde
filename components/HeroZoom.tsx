@@ -12,8 +12,8 @@ export function HeroZoom({
   coordinates,
   scrollLabel,
 }: {
-  chapterHref: string;
-  chapterLabel: string;
+  chapterHref?: string;
+  chapterLabel?: string;
   coordinates: string;
   scrollLabel: string;
 }) {
@@ -76,9 +76,13 @@ export function HeroZoom({
             <Wordmark tone="white" className="w-[min(44vw,15rem)]" />
           </div>
           <div className="absolute inset-x-5 bottom-6 flex items-end justify-between md:inset-x-10 md:bottom-9">
-            <Link href={chapterHref} className="coord link-line">
-              {chapterLabel}
-            </Link>
+            {chapterHref ? (
+              <Link href={chapterHref} className="coord link-line">
+                {chapterLabel}
+              </Link>
+            ) : (
+              <span />
+            )}
             <span className="absolute left-1/2 flex -translate-x-1/2 flex-col items-center gap-3">
               <span className="label text-bone/60">{scrollLabel}</span>
               <span className="scroll-hint" />

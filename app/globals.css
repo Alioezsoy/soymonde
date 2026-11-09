@@ -217,11 +217,11 @@ body {
   place-items: center;
   background: var(--color-ink);
   pointer-events: none;
-  animation: intro-lift 1.2s var(--ease-slow) 1.5s both;
+  animation: intro-lift 0.9s var(--ease-slow) 0.9s both;
 }
 .intro img {
   width: min(30vw, 9rem);
-  animation: intro-mark 1.3s var(--ease-slow) both;
+  animation: intro-mark 0.8s var(--ease-slow) both;
 }
 .intro-seen .intro {
   display: none;
