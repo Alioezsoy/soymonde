@@ -75,7 +75,7 @@ async function ChapterView({ params }: { params: Props["params"] }) {
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-ink/45 to-transparent" />
         <div className="relative px-5 pb-6 md:px-10 md:pb-9">
           <p className="coord">{chapter.number}</p>
-          <h1 className="display mt-2 text-[24vw] md:text-[15vw]">{chapter.title}</h1>
+          <h1 className="display mt-3 text-2xl md:text-6xl">{chapter.title}</h1>
           <div className="mt-5 flex items-end justify-between md:mt-8">
             <span className="label">
               {chapter.place[lang]}, {chapter.country[lang]}
@@ -113,7 +113,7 @@ async function ChapterView({ params }: { params: Props["params"] }) {
             <span className="label text-stone-deep">{t.archive.next}</span>
             <span className="coord">{next.number}</span>
           </div>
-          <p className="display mt-4 text-[20vw] md:text-[13vw]">{next.title}</p>
+          <p className="display mt-5 text-2xl md:text-5xl">{next.title}</p>
         </Link>
       </nav>
     </article>

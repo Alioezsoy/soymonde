@@ -137,13 +137,13 @@ export function Header({
           </button>
         </div>
 
-        <nav aria-label={t.menu} className="flex flex-1 flex-col justify-center gap-5 px-5 md:px-10">
+        <nav aria-label={t.menu} className="flex flex-1 flex-col justify-center gap-7 px-5 md:px-10">
           {nav.map((item, i) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className={`display text-6xl transition-all duration-1000 ease-slow ${
+              className={`display text-2xl transition-all duration-1000 ease-slow ${
                 open ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
               }`}
               style={{ transitionDelay: open ? `${120 + i * 90}ms` : "0ms" }}

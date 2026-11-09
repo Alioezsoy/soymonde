@@ -37,7 +37,7 @@ export function ChapterIndex({ chapters, lang }: { chapters: Chapter[]; lang: Lo
             >
               <span className="coord">{c.number}</span>
               <span>
-                <span className="display text-5xl md:text-8xl">{c.title}</span>
+                <span className="display text-xl md:text-4xl">{c.title}</span>
                 <span className="coord mt-3 block text-stone-deep md:hidden">
                   {c.place[lang]} · {c.coordinates}
                 </span>

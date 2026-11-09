@@ -65,7 +65,7 @@ async function ProductView({ params }: { params: Props["params"] }) {
                 {chapter.number} — {chapter.title}
               </Link>
             ) : null}
-            <h1 className="display mt-4 text-6xl md:text-7xl">{product.title}</h1>
+            <h1 className="display mt-4 text-xl md:text-2xl">{product.title}</h1>
             <div className="mt-5 flex items-baseline justify-between">
               <p className="coord text-sm">{formatPrice(product.price)}</p>
               <p className="label text-stone-deep">

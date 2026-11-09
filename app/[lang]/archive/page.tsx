@@ -44,7 +44,7 @@ export default async function ArchivePage() {
                   </div>
                   <div className={`md:col-span-4 md:pb-2 ${flip ? "md:order-1" : ""}`}>
                     <p className="coord">{c.number}</p>
-                    <h2 className="display mt-3 text-7xl md:mt-5 md:text-[8vw]">{c.title}</h2>
+                    <h2 className="display mt-3 text-2xl md:mt-5 md:text-4xl">{c.title}</h2>
                     <dl className="mt-6 space-y-2 border-t border-rule pt-5 md:mt-10">
                       <div className="flex justify-between gap-4">
                         <dt className="label text-stone-deep">{t.archive.place}</dt>

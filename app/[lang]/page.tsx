@@ -34,7 +34,7 @@ export default async function Home() {
               <span className="coord">{latest.number}</span>
             </div>
             <div className="absolute inset-x-4 bottom-4 md:inset-x-8 md:bottom-7">
-              <h2 className="display text-[22vw] md:text-[13vw]">{latest.title}</h2>
+              <h2 className="display text-2xl md:text-5xl">{latest.title}</h2>
               <div className="mt-4 flex items-end justify-between gap-4 md:mt-6">
                 <span className="label">
                   {latest.place[lang]}, {latest.country[lang]}
@@ -50,9 +50,9 @@ export default async function Home() {
       {/* Pieces */}
       <section className="overflow-hidden px-5 pt-28 md:px-10 md:pt-48">
         <Reveal>
-          <div className="mb-8 flex items-end justify-between md:mb-12">
-            <h2 className="display text-7xl md:text-[10rem]">{t.home.pieces}</h2>
-            <Link href={href(lang, "/shop")} className="label link-line mb-2 md:mb-5">
+          <div className="mb-8 flex items-baseline justify-between md:mb-12">
+            <h2 className="display text-2xl md:text-4xl">{t.home.pieces}</h2>
+            <Link href={href(lang, "/shop")} className="label link-line">
               {t.home.viewAll}
             </Link>
           </div>

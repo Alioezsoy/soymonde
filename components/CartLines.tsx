@@ -25,7 +25,7 @@ export function CartLines({
   if (lines.length === 0) {
     return (
       <div className="flex flex-1 flex-col items-start justify-center gap-6">
-        <p className="display text-4xl md:text-5xl">{t.empty}</p>
+        <p className="display text-lg md:text-xl">{t.empty}</p>
         <Link href={href(lang, "/shop")} onClick={onNavigate} className="label link-line">
           {t.continue}
         </Link>
