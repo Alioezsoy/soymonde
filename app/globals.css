@@ -1,26 +1,165 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* SOYMONDE — design tokens.
+   Three colours only: bone, ink, stone. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bone: #ede9e1;
+  --color-ink: #0a0a09;
+  --color-stone: #8a8379;
+  --color-stone-deep: #6b655c; /* stone, dark enough for small text on bone */
+  --color-rule: #d2ccc1; /* hairlines on bone */
+  --font-sans: var(--font-jost), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-plex), ui-monospace, Menlo, monospace;
+  --ease-slow: cubic-bezier(0.2, 0.6, 0.2, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--color-bone);
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bone);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-bone);
+}
+
+:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 4px;
+}
+
+@layer components {
+  /* Small wide-set label: the "couture" voice. */
+  .label {
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  /* Coordinates and chapter numbers: the "world" voice. */
+  .coord {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .display {
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  /* Underline that draws in slowly. */
+  .link-line {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 3px;
+    transition: background-size 0.9s var(--ease-slow);
+  }
+  .link-line:hover,
+  .group:hover .link-line {
+    background-size: 100% 1px;
+  }
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 1.6s var(--ease-slow),
+    transform 1.6s var(--ease-slow);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Page fade on navigation */
+.page-enter {
+  animation: page-enter 1.1s var(--ease-slow) both;
+}
+@keyframes page-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Image plates. Without a real image they show a quiet tonal field. */
+.plate {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-stone);
+}
+.plate-inner {
+  position: absolute;
+  inset: 0;
+  transition: transform 2.4s var(--ease-slow);
+}
+.group:hover .plate-inner {
+  transform: scale(1.025);
+}
+.plate-inner[data-tone="ink"] {
+  background:
+    radial-gradient(120% 80% at var(--lx, 30%) 15%, #2b2926 0%, transparent 60%),
+    linear-gradient(165deg, #1a1917, #0a0a09);
+}
+.plate-inner[data-tone="smoke"] {
+  background:
+    radial-gradient(120% 80% at var(--lx, 70%) 10%, #55504a 0%, transparent 60%),
+    linear-gradient(165deg, #3b3834, #211f1d);
+}
+.plate-inner[data-tone="stone"] {
+  background:
+    radial-gradient(120% 80% at var(--lx, 30%) 10%, #a39c91 0%, transparent 60%),
+    linear-gradient(165deg, #8a8379, #6d675e);
+}
+.plate-inner[data-tone="sand"] {
+  background:
+    radial-gradient(120% 80% at var(--lx, 65%) 10%, #dedad1 0%, transparent 60%),
+    linear-gradient(165deg, #d0cabf, #b8b1a5);
+}
+.plate-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .page-enter {
+    animation: none;
+  }
+  .plate-inner,
+  .link-line {
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }
