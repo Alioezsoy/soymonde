@@ -72,10 +72,11 @@ export function Header({
 
   return (
     <>
-      {/* Clear with light text over dark images, bone with dark text everywhere else. */}
+      {/* Over dark images the bar is clear and inverts against what is behind it;
+          everywhere else it is bone with dark text. */}
       <header
-        className={`fixed inset-x-0 top-0 z-40 transition-colors duration-700 ease-slow ${
-          onDark ? "bg-transparent text-bone" : "bg-bone/85 text-ink backdrop-blur-md"
+        className={`fixed inset-x-0 top-0 z-40 ${
+          onDark ? "bg-transparent text-white mix-blend-difference" : "bg-bone/85 text-ink backdrop-blur-md"
         }`}
       >
         <div className="flex h-16 items-center justify-between px-5 md:h-20 md:px-10">

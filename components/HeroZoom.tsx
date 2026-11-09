@@ -41,7 +41,10 @@ export function HeroZoom({
       const width = mark.current.offsetWidth;
       const origin = window.innerWidth / 2 - 0.355 * width;
       const covered = scale * width * 0.06 >= Math.max(origin, window.innerWidth - origin);
-      el.toggleAttribute("data-header-dark", !covered);
+      if (el.hasAttribute("data-header-dark") === covered) {
+        el.toggleAttribute("data-header-dark", !covered);
+        window.dispatchEvent(new Event("resize")); // let the header re-check right away
+      }
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
