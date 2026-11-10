@@ -22,11 +22,19 @@ Die Seite gibt es auf Englisch (`/en`), Deutsch (`/de`) und Türkisch (`/tr`). W
 
 | Was | Datei |
 | --- | --- |
-| Kollektionen / Kapitel (SM-001 …), Texte, Bilder | `content/chapters.ts` |
+| Archiv-Fotos | Ordner `public/archive` (siehe unten) |
 | Allgemeine Texte in allen drei Sprachen (Navigation, Manifest, About …) | `content/dictionaries.ts` |
 | Platzhalter-Produkte (bis Shopify angebunden ist) | `content/products.ts` |
 | Warenkorb-Logik (später Shopify) | `lib/cart.ts` |
 | Logos | Dateien in `public/logos`, Dateinamen in `lib/brand.ts` |
 | Farben, Schrift, Übergänge | `app/globals.css` |
 
-Bilder für das Archiv kommen nach `public/archive/…` und werden in `content/chapters.ts` mit `src: "/archive/…"` eingetragen.
+## Archiv-Fotos hinzufügen
+
+Fotos in den Ordner `public/archive` legen. Sie erscheinen automatisch auf der Seite, sortiert nach Dateiname. Eine Nummer vorne bestimmt die Reihenfolge; eines der Wörter `process`, `sketch` oder `studio` im Namen setzt die Beschriftung:
+
+    01-studio-desk.jpg
+    02-sketch-hoodie.jpg
+    03-process-cutting.jpg
+
+Solange der Ordner keine Fotos enthält, zeigt die Seite Platzhalter.

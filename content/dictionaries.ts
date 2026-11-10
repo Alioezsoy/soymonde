@@ -1,7 +1,7 @@
 // All general site texts, in English, German and Turkish.
 //
 // Rule: the brand's own vocabulary stays the same in every language
-// (Shop, Pieces, Archive, The World, Chapter, Newsletter). Only the
+// (Shop, Pieces, Archive, About, Newsletter). Only the
 // functional words a customer needs are localised, in natural wording.
 import type { Locale } from "@/lib/i18n";
 
@@ -23,25 +23,18 @@ const en = {
   },
   base: { label: "Studio", place: "Rorschacherberg, Switzerland", coordinates: "47°28′N 9°30′E" },
   home: {
-    latest: "Latest chapter",
-    discover: "Discover",
     pieces: "Pieces",
     viewAll: "View all",
-    world: "The World",
-    openArchive: "Archive",
+    archive: "Archive",
+    discover: "Discover",
   },
   archive: {
     label: "Archive",
-    title: "The World",
-    chapter: "Chapter",
-    place: "Place",
-    position: "Coordinates",
-    year: "Year",
-    next: "Next chapter",
-    west: "West",
-    east: "East",
-    mapLabel: "Chapters by longitude",
-    pieces: "Pieces from this chapter",
+    kinds: { process: "Process", sketch: "Sketch", studio: "Studio" },
+    open: "View image",
+    close: "Close",
+    previous: "Previous image",
+    next: "Next image",
   },
   shop: {
     label: "Shop",
@@ -57,7 +50,6 @@ const en = {
     // PLACEHOLDER — replace with your real terms.
     shippingText: "Ships from Switzerland. Delivery times and return terms are confirmed at checkout.",
     more: "More pieces",
-    chapter: "Chapter",
   },
   cart: {
     label: "Bag",
@@ -78,7 +70,7 @@ const en = {
   contact: { label: "Contact", title: "Contact" },
   newsletter: {
     title: "Newsletter",
-    text: "New chapters and drops, before anyone else.",
+    text: "New drops, before anyone else.",
     email: "Email address",
     subscribe: "Sign up",
     pending: "Sign-up opens soon.",
@@ -106,25 +98,18 @@ const de: Dictionary = {
   },
   base: { label: "Studio", place: "Rorschacherberg, Schweiz", coordinates: "47°28′N 9°30′E" },
   home: {
-    latest: "Aktuelles Chapter",
-    discover: "Entdecken",
     pieces: "Pieces",
     viewAll: "Alle ansehen",
-    world: "The World",
-    openArchive: "Archive",
+    archive: "Archive",
+    discover: "Entdecken",
   },
   archive: {
     label: "Archive",
-    title: "The World",
-    chapter: "Chapter",
-    place: "Ort",
-    position: "Koordinaten",
-    year: "Jahr",
-    next: "Nächstes Chapter",
-    west: "West",
-    east: "Ost",
-    mapLabel: "Chapters nach Längengrad",
-    pieces: "Pieces aus diesem Chapter",
+    kinds: { process: "Process", sketch: "Sketch", studio: "Studio" },
+    open: "Bild ansehen",
+    close: "Schliessen",
+    previous: "Vorheriges Bild",
+    next: "Nächstes Bild",
   },
   shop: {
     label: "Shop",
@@ -139,7 +124,6 @@ const de: Dictionary = {
     shipping: "Versand & Rückgabe",
     shippingText: "Versand aus der Schweiz. Lieferzeit und Rückgabe siehst du im Checkout.",
     more: "Weitere Pieces",
-    chapter: "Chapter",
   },
   cart: {
     label: "Warenkorb",
@@ -160,7 +144,7 @@ const de: Dictionary = {
   contact: { label: "Kontakt", title: "Kontakt" },
   newsletter: {
     title: "Newsletter",
-    text: "Neue Chapters und Drops, vor allen anderen.",
+    text: "Neue Drops, vor allen anderen.",
     email: "E-Mail-Adresse",
     subscribe: "Anmelden",
     pending: "Die Anmeldung öffnet in Kürze.",
@@ -186,25 +170,18 @@ const tr: Dictionary = {
   },
   base: { label: "Stüdyo", place: "Rorschacherberg, İsviçre", coordinates: "47°28′N 9°30′E" },
   home: {
-    latest: "Yeni chapter",
-    discover: "Keşfet",
     pieces: "Pieces",
     viewAll: "Tümünü gör",
-    world: "The World",
-    openArchive: "Archive",
+    archive: "Archive",
+    discover: "Keşfet",
   },
   archive: {
     label: "Archive",
-    title: "The World",
-    chapter: "Chapter",
-    place: "Yer",
-    position: "Koordinat",
-    year: "Yıl",
-    next: "Sıradaki chapter",
-    west: "Batı",
-    east: "Doğu",
-    mapLabel: "Boylama göre chapter'lar",
-    pieces: "Bu chapter'dan parçalar",
+    kinds: { process: "Process", sketch: "Sketch", studio: "Studio" },
+    open: "Görseli aç",
+    close: "Kapat",
+    previous: "Önceki görsel",
+    next: "Sonraki görsel",
   },
   shop: {
     label: "Shop",
@@ -219,7 +196,6 @@ const tr: Dictionary = {
     shipping: "Kargo & iade",
     shippingText: "İsviçre'den gönderilir. Teslimat süresi ve iade koşulları ödeme adımında gösterilir.",
     more: "Diğer parçalar",
-    chapter: "Chapter",
   },
   cart: {
     label: "Sepet",
@@ -240,7 +216,7 @@ const tr: Dictionary = {
   contact: { label: "İletişim", title: "İletişim" },
   newsletter: {
     title: "Newsletter",
-    text: "Yeni chapter ve drop'lar, herkesten önce.",
+    text: "Yeni drop'lar, herkesten önce.",
     email: "E-posta adresi",
     subscribe: "Kaydol",
     pending: "Kayıt yakında açılıyor.",

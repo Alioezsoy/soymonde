@@ -44,7 +44,7 @@ export function ProductCard({
         <div className="min-w-0">
           <p className="text-sm md:text-base">{product.title}</p>
           <p className="coord mt-1 truncate text-stone-deep">
-            {product.colour[lang]} · {product.chapter}
+            {product.colour[lang]}
           </p>
         </div>
         <p className="coord mt-1 shrink-0 md:mt-0 md:pt-1">{formatPrice(product.price)}</p>

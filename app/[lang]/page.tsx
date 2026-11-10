@@ -1,9 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ChapterIndex } from "@/components/ChapterIndex";
 import { Plate } from "@/components/Plate";
 import { ProductCard } from "@/components/ProductCard";
 import { Reveal } from "@/components/Reveal";
-import { chaptersNewestFirst } from "@/content/chapters";
+import { getArchive } from "@/content/archive";
 import { products } from "@/content/products";
 import { href } from "@/lib/i18n";
 import { getTexts } from "@/lib/locale";
@@ -13,9 +13,8 @@ const FEATURED = 6;
 
 export default async function Home() {
   const { lang, t } = await getTexts();
-  const latest = chaptersNewestFirst[0];
-  const latestHref = href(lang, `/archive/${latest.slug}`);
   const featured = products.slice(0, FEATURED);
+  const archive = getArchive().slice(0, 6);
 
   return (
     <>
@@ -36,40 +35,37 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Latest chapter: one large image, title set over it */}
-      <section className="px-5 pt-28 md:px-10 md:pt-48">
+      {/* A look into the archive */}
+      <section className="overflow-hidden px-5 py-28 md:px-10 md:py-48">
         <Reveal>
-          <Link href={latestHref} className="group relative block text-bone">
-            <Plate frame={latest.cover} className="aspect-[3/4] md:aspect-[16/9]" />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
-            <div className="absolute inset-x-4 top-4 flex items-baseline justify-between md:inset-x-8 md:top-7">
-              <span className="label">{t.home.latest}</span>
-              <span className="coord">{latest.number}</span>
-            </div>
-            <div className="absolute inset-x-4 bottom-4 md:inset-x-8 md:bottom-7">
-              <h2 className="display text-2xl md:text-5xl">{latest.title}</h2>
-              <div className="mt-4 flex items-end justify-between gap-4 md:mt-6">
-                <span className="label">
-                  {latest.place[lang]}, {latest.country[lang]}
-                  <span className="coord mt-1 block text-bone/70">{latest.coordinates}</span>
-                </span>
-                <span className="label link-line">{t.home.discover}</span>
-              </div>
-            </div>
-          </Link>
-        </Reveal>
-      </section>
-
-      {/* The world: chapter index */}
-      <section className="px-5 py-28 md:px-10 md:py-48">
-        <Reveal>
-          <div className="mb-8 flex items-baseline justify-between md:mb-12">
-            <h2 className="label text-stone-deep">{t.home.world}</h2>
+          <div className="mb-5 flex items-baseline justify-between md:mb-8">
+            <h2 className="label">{t.home.archive}</h2>
             <Link href={href(lang, "/archive")} className="label link-line">
-              {t.home.openArchive}
+              {t.home.discover}
             </Link>
           </div>
-          <ChapterIndex chapters={chaptersNewestFirst} lang={lang} />
+          <Link
+            href={href(lang, "/archive")}
+            aria-label={t.home.archive}
+            className="rail group -mx-5 flex items-end gap-3 overflow-x-auto px-5 md:-mx-10 md:gap-5 md:px-10"
+          >
+            {archive.map((entry, i) => (
+              <div key={i} className="h-[52svh] shrink-0 md:h-[68svh]" style={{ aspectRatio: `${entry.width} / ${entry.height}` }}>
+                {entry.src ? (
+                  <Image
+                    src={entry.src}
+                    alt={entry.alt}
+                    width={entry.width}
+                    height={entry.height}
+                    sizes="70vw"
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <Plate frame={entry} className="h-full" />
+                )}
+              </div>
+            ))}
+          </Link>
         </Reveal>
       </section>
     </>

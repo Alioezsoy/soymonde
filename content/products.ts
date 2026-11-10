@@ -2,7 +2,7 @@
 // from Shopify (Storefront API) in the next step. The shape below
 // mirrors what Shopify returns, so the pages stay the same.
 import type { Localized } from "@/lib/i18n";
-import type { Frame } from "./chapters";
+import type { Frame } from "./archive";
 
 export type Size = { label: string; available: boolean };
 
@@ -11,7 +11,6 @@ export type Product = {
   title: string;
   price: number; // CHF
   colour: Localized;
-  chapter: string; // SM-003
   frames: Frame[]; // first = main image, second = shown on hover
   sizes: Size[];
   details: Localized[];
@@ -37,7 +36,6 @@ export const products: Product[] = [
     title: "Monogram Hoodie",
     price: 180,
     colour: black,
-    chapter: "SM-003",
     frames: [
       { alt: "Monogram Hoodie", tone: "ink" },
       { alt: "Monogram Hoodie, back", tone: "smoke" },
@@ -51,7 +49,6 @@ export const products: Product[] = [
     title: "Atelier Coat",
     price: 420,
     colour: stone,
-    chapter: "SM-003",
     frames: [
       { alt: "Atelier Coat", tone: "stone" },
       { alt: "Atelier Coat, back", tone: "sand" },
@@ -65,7 +62,6 @@ export const products: Product[] = [
     title: "Box Tee",
     price: 75,
     colour: bone,
-    chapter: "SM-002",
     frames: [
       { alt: "Box Tee", tone: "sand" },
       { alt: "Box Tee, back", tone: "stone" },
@@ -79,7 +75,6 @@ export const products: Product[] = [
     title: "Wide Trouser",
     price: 210,
     colour: black,
-    chapter: "SM-002",
     frames: [
       { alt: "Wide Trouser", tone: "smoke" },
       { alt: "Wide Trouser, back", tone: "ink" },
@@ -93,7 +88,6 @@ export const products: Product[] = [
     title: "Monogram Cap",
     price: 60,
     colour: black,
-    chapter: "SM-001",
     frames: [
       { alt: "Monogram Cap", tone: "ink" },
       { alt: "Monogram Cap, side", tone: "sand" },
@@ -106,7 +100,6 @@ export const products: Product[] = [
     title: "Origin Knit",
     price: 240,
     colour: bone,
-    chapter: "SM-001",
     frames: [
       { alt: "Origin Knit", tone: "sand" },
       { alt: "Origin Knit, back", tone: "smoke" },

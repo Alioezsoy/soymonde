@@ -1,19 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { Monogram, Wordmark } from "./Logo";
 
 /** The opening. While scrolling, the camera moves into the monogram
     until its white fills the screen and becomes the page itself. */
 export function HeroZoom({
-  chapterHref,
-  chapterLabel,
   coordinates,
   scrollLabel,
 }: {
-  chapterHref?: string;
-  chapterLabel?: string;
   coordinates: string;
   scrollLabel: string;
 }) {
@@ -76,13 +71,7 @@ export function HeroZoom({
             <Wordmark tone="white" className="w-[min(44vw,15rem)]" />
           </div>
           <div className="absolute inset-x-5 bottom-6 flex items-end justify-between md:inset-x-10 md:bottom-9">
-            {chapterHref ? (
-              <Link href={chapterHref} className="coord link-line">
-                {chapterLabel}
-              </Link>
-            ) : (
-              <span />
-            )}
+            <span />
             <span className="absolute left-1/2 flex -translate-x-1/2 flex-col items-center gap-3">
               <span className="label text-bone/60">{scrollLabel}</span>
               <span className="scroll-hint" />

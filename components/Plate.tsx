@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { Frame } from "@/content/chapters";
+import type { Frame } from "@/content/archive";
 
 type Props = {
   frame: Frame;

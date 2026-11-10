@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { AddToBag } from "@/components/AddToBag";
 import { Plate } from "@/components/Plate";
 import { ProductRail } from "@/components/ProductRail";
 import { Reveal } from "@/components/Reveal";
-import { getChapterByNumber } from "@/content/chapters";
 import { formatPrice, getProduct, products } from "@/content/products";
-import { href } from "@/lib/i18n";
 import { getTexts } from "@/lib/locale";
 
 type Props = PageProps<"/[lang]/shop/[handle]">;
@@ -37,7 +34,6 @@ async function ProductView({ params }: { params: Props["params"] }) {
   if (!product) notFound();
   const { lang, t } = await getTexts();
 
-  const chapter = getChapterByNumber(product.chapter);
   const more = products.filter((p) => p.handle !== product.handle);
 
   return (
@@ -60,12 +56,7 @@ async function ProductView({ params }: { params: Props["params"] }) {
         {/* Buying panel: stays in view on desktop */}
         <div className="px-5 pt-6 md:col-span-5 md:px-0 md:pt-0 lg:col-span-4 lg:col-start-9">
           <div className="md:sticky md:top-28">
-            {chapter ? (
-              <Link href={href(lang, `/archive/${chapter.slug}`)} className="coord link-line text-stone-deep">
-                {chapter.number} — {chapter.title}
-              </Link>
-            ) : null}
-            <h1 className="display mt-4 text-xl md:text-2xl">{product.title}</h1>
+            <h1 className="display text-xl md:text-2xl">{product.title}</h1>
             <div className="mt-5 flex items-baseline justify-between">
               <p className="coord text-sm">{formatPrice(product.price)}</p>
               <p className="label text-stone-deep">
