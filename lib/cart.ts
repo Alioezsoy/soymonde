@@ -5,7 +5,10 @@
 // Shopify cart instead — the pages do not need to change.
 import { useSyncExternalStore } from "react";
 
-export type CartLine = { handle: string; size: string; quantity: number };
+export type CartLine = { handle: string; colour?: string; size: string; quantity: number };
+
+const same = (l: CartLine, handle: string, colour: string, size: string) =>
+  l.handle === handle && (l.colour ?? "main") === colour && l.size === size;
 
 const KEY = "soymonde-bag";
 const EMPTY: CartLine[] = [];
@@ -34,22 +37,22 @@ function commit(next: CartLine[]) {
   listeners.forEach((l) => l());
 }
 
-export function addToCart(handle: string, size: string) {
+export function addToCart(handle: string, colour: string, size: string) {
   load();
-  const existing = lines.find((l) => l.handle === handle && l.size === size);
+  const existing = lines.find((l) => same(l, handle, colour, size));
   commit(
     existing
       ? lines.map((l) => (l === existing ? { ...l, quantity: l.quantity + 1 } : l))
-      : [...lines, { handle, size, quantity: 1 }],
+      : [...lines, { handle, colour, size, quantity: 1 }],
   );
 }
 
-export function setQuantity(handle: string, size: string, quantity: number) {
+export function setQuantity(handle: string, colour: string, size: string, quantity: number) {
   load();
   commit(
     quantity <= 0
-      ? lines.filter((l) => !(l.handle === handle && l.size === size))
-      : lines.map((l) => (l.handle === handle && l.size === size ? { ...l, quantity } : l)),
+      ? lines.filter((l) => !same(l, handle, colour, size))
+      : lines.map((l) => (same(l, handle, colour, size) ? { ...l, quantity } : l)),
   );
 }
 

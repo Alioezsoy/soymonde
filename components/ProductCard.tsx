@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Dictionary } from "@/content/dictionaries";
-import { formatPrice, type Product } from "@/content/products";
+import { formatPrice, variantsOf, type Product } from "@/content/products";
 import { href, type Locale } from "@/lib/i18n";
 import { Plate } from "./Plate";
 
@@ -27,10 +27,10 @@ export function ProductCard({
   return (
     <Link href={href(lang, `/shop/${product.handle}`)} className="group flex h-full flex-col bg-paper">
       <div className="relative">
-        <Plate frame={product.frames[0]} className="aspect-[4/5]" sizes={sizes} priority={priority} blend />
+        <Plate frame={product.frames[0]} className="aspect-[4/5]" sizes={sizes} priority={priority} blend contain />
         {product.frames[1] ? (
           <div className="swap-second absolute inset-0 bg-paper">
-            <Plate frame={product.frames[1]} className="h-full" sizes={sizes} blend />
+            <Plate frame={product.frames[1]} className="h-full" sizes={sizes} blend contain />
           </div>
         ) : null}
         <span className="coord absolute inset-x-3 bottom-3 hidden justify-between text-bone opacity-0 mix-blend-difference transition-opacity duration-700 group-hover:opacity-100 md:flex">
@@ -46,13 +46,18 @@ export function ProductCard({
         </div>
         <p lang="en" className="label mt-2">{product.title}</p>
         <p className="coord mt-1.5 text-stone-deep">{formatPrice(product.price)}</p>
-        <span
-          className="mt-3 block size-3 rounded-full border border-ink/20"
-          style={{ background: product.swatch }}
-          title={product.colour[lang]}
-          role="img"
-          aria-label={product.colour[lang]}
-        />
+        <span className="mt-3 flex gap-1.5">
+          {variantsOf(product).map((v) => (
+            <span
+              key={v.key}
+              className="block size-3 rounded-full border border-ink/20"
+              style={{ background: v.swatch }}
+              title={v.colour[lang]}
+              role="img"
+              aria-label={v.colour[lang]}
+            />
+          ))}
+        </span>
       </div>
     </Link>
   );

@@ -15,10 +15,13 @@ const NOTIFY_CONNECTED = false;
     turns the button into "Notify me", which asks for an email address. */
 export function AddToBag({
   handle,
+  colour,
   sizes,
   t,
 }: {
   handle: string;
+  /** key of the chosen colour */
+  colour: string;
   sizes: Size[];
   t: Dictionary["shop"];
 }) {
@@ -106,7 +109,7 @@ export function AddToBag({
           onClick={() => {
             if (!size) return setHint(true);
             if (notify) return setAsking(true);
-            addToCart(handle, size);
+            addToCart(handle, colour, size);
             openCart();
           }}
           className={`label mt-4 h-14 w-full transition-opacity duration-500 hover:opacity-85 ${
