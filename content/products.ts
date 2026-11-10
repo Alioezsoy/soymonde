@@ -55,18 +55,22 @@ export const products: Product[] = [
     ],
   },
   {
-    handle: "monogram-hoodie",
-    title: "Monogram Hoodie",
+    handle: "v001-hoodie",
+    title: "V001 Hoodie", // working name
     price: 180,
-    colour: black,
-    swatch: "#0a0a09",
+    colour: emerald,
+    swatch: "#0a5c36",
     frames: [
-      { alt: "Monogram Hoodie", tone: "ink" },
-      { alt: "Monogram Hoodie, back", tone: "smoke" },
-      { alt: "Monogram Hoodie, detail", tone: "stone" },
+      { src: "/products/v001-hoodie-01.webp", alt: "V001 Hoodie, front", tone: "sand" },
+      { src: "/products/v001-hoodie-02.webp", alt: "V001 Hoodie, back", tone: "sand" },
+      { src: "/products/v001-hoodie-03.webp", alt: "V001 Hoodie, embossed lettering", tone: "sand" },
     ],
-    sizes: sizes(),
-    details,
+    sizes: sizes(), // PLACEHOLDER: sizes not confirmed yet
+    details: [
+      { en: "Cropped fit", de: "Cropped geschnitten", tr: "Crop kesim" },
+      { en: "Embossed lettering on the chest", de: "Geprägter Schriftzug auf der Brust", tr: "Göğüste kabartma yazı" },
+      { en: "Material to follow", de: "Material folgt", tr: "Kumaş bilgisi eklenecek" },
+    ],
   },
   {
     handle: "atelier-coat",

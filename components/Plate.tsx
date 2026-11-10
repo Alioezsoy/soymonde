@@ -10,6 +10,8 @@ type Props = {
   showCaption?: boolean;
   /** for photos on a white background: lets the white take on the colour behind the image */
   blend?: boolean;
+  /** show the whole photo instead of filling (and cropping to) the frame */
+  contain?: boolean;
 };
 
 /** An image "plate". Shows the real image if the frame has a src,
@@ -21,6 +23,7 @@ export function Plate({
   priority = false,
   showCaption = false,
   blend = false,
+  contain = false,
 }: Props) {
   const light = frame.tone === "sand" || frame.tone === "stone";
   return (
@@ -33,7 +36,7 @@ export function Plate({
             fill
             sizes={sizes}
             priority={priority}
-            className={`object-cover ${blend ? "mix-blend-multiply" : ""}`}
+            className={`${contain ? "object-contain" : "object-cover"} ${blend ? "mix-blend-multiply brightness-[1.04]" : ""}`}
           />
         </div>
       ) : (

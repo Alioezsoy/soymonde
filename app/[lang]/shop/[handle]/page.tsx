@@ -57,6 +57,7 @@ async function ProductView({ params }: { params: Props["params"] }) {
                   className="aspect-[4/5] md:aspect-square"
                   sizes="(min-width: 768px) 58vw, 88vw"
                   blend
+                  contain
                   priority={i === 0}
                 />
               </div>
