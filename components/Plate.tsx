@@ -8,6 +8,8 @@ type Props = {
   sizes?: string;
   priority?: boolean;
   showCaption?: boolean;
+  /** for photos on a white background: lets the white take on the colour behind the image */
+  blend?: boolean;
 };
 
 /** An image "plate". Shows the real image if the frame has a src,
@@ -18,10 +20,11 @@ export function Plate({
   sizes = "100vw",
   priority = false,
   showCaption = false,
+  blend = false,
 }: Props) {
   const light = frame.tone === "sand" || frame.tone === "stone";
   return (
-    <div className={`plate ${className}`}>
+    <div className={`plate ${className}`} style={frame.src && blend ? { background: "transparent" } : undefined}>
       {frame.src ? (
         <div className="plate-inner">
           <Image
@@ -30,7 +33,7 @@ export function Plate({
             fill
             sizes={sizes}
             priority={priority}
-            className="object-cover"
+            className={`object-cover ${blend ? "mix-blend-multiply" : ""}`}
           />
         </div>
       ) : (

@@ -27,10 +27,10 @@ export function ProductCard({
   return (
     <Link href={href(lang, `/shop/${product.handle}`)} className="group flex h-full flex-col bg-paper">
       <div className="relative">
-        <Plate frame={product.frames[0]} className="aspect-[3/4]" sizes={sizes} priority={priority} />
+        <Plate frame={product.frames[0]} className="aspect-[4/5]" sizes={sizes} priority={priority} blend />
         {product.frames[1] ? (
-          <div className="swap-second absolute inset-0">
-            <Plate frame={product.frames[1]} className="h-full" sizes={sizes} />
+          <div className="swap-second absolute inset-0 bg-paper">
+            <Plate frame={product.frames[1]} className="h-full" sizes={sizes} blend />
           </div>
         ) : null}
         <span className="coord absolute inset-x-3 bottom-3 hidden justify-between text-bone opacity-0 mix-blend-difference transition-opacity duration-700 group-hover:opacity-100 md:flex">

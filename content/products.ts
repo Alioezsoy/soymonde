@@ -24,6 +24,7 @@ const sizes = (soldOut: string[] = []): Size[] =>
 const black: Localized = { en: "Black", de: "Schwarz", tr: "Siyah" };
 const stone: Localized = { en: "Stone", de: "Stone", tr: "Taş" };
 const bone: Localized = { en: "Bone", de: "Bone", tr: "Kemik" };
+const emerald: Localized = { en: "Emerald", de: "Smaragd", tr: "Zümrüt" };
 
 // PLACEHOLDER details — replace with real material and fit information.
 const details: Localized[] = [
@@ -33,9 +34,28 @@ const details: Localized[] = [
 ];
 
 export const products: Product[] = [
+  // The first real piece. Photos are in /public/products.
+  {
+    handle: "emerald-balaclava",
+    tag: "new",
+    title: "Emerald Balaclava", // working name
+    price: 199,
+    colour: emerald,
+    swatch: "#0a5c36",
+    frames: [
+      { src: "/products/emerald-balaclava-01.webp", alt: "Emerald Balaclava, front", tone: "sand" },
+      { src: "/products/emerald-balaclava-02.webp", alt: "Emerald Balaclava, back", tone: "sand" },
+      { src: "/products/emerald-balaclava-03.webp", alt: "Emerald Balaclava, lining detail", tone: "sand" },
+    ],
+    sizes: [{ label: "One size", available: true }],
+    details: [
+      { en: "Knitted, with pearl detail and fringe", de: "Gestrickt, mit Perlen und Fransen", tr: "Örgü, inci ve saçak detaylı" },
+      { en: "Lined", de: "Gefüttert", tr: "Astarlı" },
+      { en: "Material to follow", de: "Material folgt", tr: "Kumaş bilgisi eklenecek" },
+    ],
+  },
   {
     handle: "monogram-hoodie",
-    tag: "new",
     title: "Monogram Hoodie",
     price: 180,
     colour: black,

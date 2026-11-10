@@ -41,10 +41,10 @@ export function CartLines({
             <Link
               href={href(lang, `/shop/${line.handle}`)}
               onClick={onNavigate}
-              className="w-20 shrink-0 md:w-24"
+              className="w-20 shrink-0 bg-bone md:w-24"
               aria-label={product!.title}
             >
-              <Plate frame={product!.frames[0]} className="aspect-[3/4]" sizes="96px" />
+              <Plate frame={product!.frames[0]} className="aspect-[4/5]" sizes="96px" blend />
             </Link>
             <div className="flex min-w-0 flex-1 flex-col">
               <div className="flex items-start justify-between gap-3">

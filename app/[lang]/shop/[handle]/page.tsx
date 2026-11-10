@@ -46,13 +46,20 @@ async function ProductView({ params }: { params: Props["params"] }) {
         {/* Images: swipe on the phone, stacked on desktop */}
         <div className="rail flex snap-x snap-mandatory overflow-x-auto md:col-span-7 md:block md:space-y-5 md:overflow-visible">
           {product.frames.map((frame, i) => (
-            <div key={i} className="w-[88vw] shrink-0 snap-start pr-1 last:pr-0 md:w-auto md:pr-0">
-              <Plate
-                frame={frame}
-                className="aspect-[3/4]"
-                sizes="(min-width: 768px) 58vw, 88vw"
-                priority={i === 0}
-              />
+            <div
+              key={i}
+              className="w-[88vw] shrink-0 snap-start pr-1 last:pr-0 md:w-auto md:pr-0"
+            >
+              {/* bone behind the photo, so its white background melts into the page */}
+              <div className="bg-bone">
+                <Plate
+                  frame={frame}
+                  className="aspect-[4/5] md:aspect-square"
+                  sizes="(min-width: 768px) 58vw, 88vw"
+                  blend
+                  priority={i === 0}
+                />
+              </div>
             </div>
           ))}
         </div>
@@ -60,31 +67,46 @@ async function ProductView({ params }: { params: Props["params"] }) {
         {/* Buying panel: stays in view on desktop */}
         <div className="px-5 pt-6 md:col-span-5 md:px-0 md:pt-0 lg:col-span-4 lg:col-start-9">
           <div className="md:sticky md:top-28">
-            <nav aria-label="Breadcrumb" className="coord flex gap-2 text-stone-deep">
+            <nav
+              aria-label="Breadcrumb"
+              className="coord flex gap-2 text-stone-deep"
+            >
               <Link href={href(lang, "/shop")} className="link-line">
                 {t.shop.label}
               </Link>
               <span aria-hidden="true">/</span>
-              <span lang="en" className="truncate text-ink">{product.title}</span>
+              <span lang="en" className="truncate text-ink">
+                {product.title}
+              </span>
             </nav>
             <div className="mt-6 flex min-h-5 gap-1.5">
               {product.tag ? <Tag>{t.shop.tags[product.tag]}</Tag> : null}
             </div>
-            <h1 lang="en" className="display mt-3 text-xl md:text-2xl">{product.title}</h1>
+            <h1 lang="en" className="display mt-3 text-xl md:text-2xl">
+              {product.title}
+            </h1>
             <p className="coord mt-3 text-sm">{formatPrice(product.price)}</p>
 
             <div className="mt-8 border-t border-rule pt-5">
               <p className="label text-stone-deep">
-                {t.shop.colour} <span className="ml-2 text-ink">{product.colour[lang]}</span>
+                {t.shop.colour}{" "}
+                <span className="ml-2 text-ink">{product.colour[lang]}</span>
               </p>
               <span className="mt-3 inline-flex h-12 items-center gap-2.5 border border-ink px-4">
-                <span className="size-3.5 rounded-full border border-ink/20" style={{ background: product.swatch }} />
+                <span
+                  className="size-3.5 rounded-full border border-ink/20"
+                  style={{ background: product.swatch }}
+                />
                 <span className="coord">{product.colour[lang]}</span>
               </span>
             </div>
 
             <div className="mt-7">
-              <AddToBag handle={product.handle} sizes={product.sizes} t={t.shop} />
+              <AddToBag
+                handle={product.handle}
+                sizes={product.sizes}
+                t={t.shop}
+              />
             </div>
 
             <div className="mt-10 border-t border-rule">
@@ -104,7 +126,9 @@ async function ProductView({ params }: { params: Props["params"] }) {
                   {t.shop.shipping}
                   <ChevronIcon className="transition-transform duration-500 group-open/d:rotate-180" />
                 </summary>
-                <p className="pb-6 font-light text-stone-deep">{t.shop.shippingText}</p>
+                <p className="pb-6 font-light text-stone-deep">
+                  {t.shop.shippingText}
+                </p>
               </details>
             </div>
           </div>
