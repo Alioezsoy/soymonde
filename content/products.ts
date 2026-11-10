@@ -1,6 +1,6 @@
-// PLACEHOLDER products. These will be replaced by real products
-// from Shopify (Storefront API) in the next step. The shape below
-// mirrors what Shopify returns, so the pages stay the same.
+// The products. For now they are written here by hand; in the next step
+// they come from Shopify (Storefront API). The shape below mirrors what
+// Shopify returns, so the pages stay the same.
 import type { Localized } from "@/lib/i18n";
 import type { Frame } from "./archive";
 
@@ -38,21 +38,13 @@ export const variantsOf = (p: Product): Variant[] => [
 export const getVariant = (p: Product, key?: string) =>
   variantsOf(p).find((v) => v.key === key) ?? variantsOf(p)[0];
 
-const sizes = (soldOut: string[] = []): Size[] =>
-  ["S", "M", "L", "XL"].map((label) => ({ label, available: !soldOut.includes(label) }));
+/** S to XL. Sizes listed in `notInStock` show the "Notify me" button. */
+const sizes = (notInStock: string[] = []): Size[] =>
+  ["S", "M", "L", "XL"].map((label) => ({ label, available: !notInStock.includes(label) }));
 
 const black: Localized = { en: "Black", de: "Schwarz", tr: "Siyah" };
-const stone: Localized = { en: "Stone", de: "Stone", tr: "Taş" };
-const bone: Localized = { en: "Bone", de: "Bone", tr: "Kemik" };
 const emerald: Localized = { en: "Emerald", de: "Smaragd", tr: "Zümrüt" };
 const white: Localized = { en: "White", de: "Weiss", tr: "Beyaz" };
-
-// PLACEHOLDER details — replace with real material and fit information.
-const details: Localized[] = [
-  { en: "Material and weight to follow", de: "Material und Gewicht folgen", tr: "Kumaş ve gramaj eklenecek" },
-  { en: "Fit to follow", de: "Passform folgt", tr: "Kalıp bilgisi eklenecek" },
-  { en: "Made in — to follow", de: "Hergestellt in — folgt", tr: "Üretim yeri eklenecek" },
-];
 
 export const products: Product[] = [
   // The first real piece. Photos are in /public/products.
@@ -116,7 +108,7 @@ export const products: Product[] = [
         ],
       },
     ],
-    sizes: sizes(), // PLACEHOLDER: sizes not confirmed yet
+    sizes: sizes(),
     details: [
       { en: "Wide leg", de: "Weites Bein", tr: "Bol paça" },
       { en: "Frayed checkerboard pattern", de: "Schachbrettmuster mit Fransen", tr: "Saçaklı dama deseni" },
@@ -125,59 +117,23 @@ export const products: Product[] = [
     ],
   },
   {
-    handle: "atelier-coat",
-    tag: "limited",
-    title: "Atelier Coat",
-    price: 420,
-    colour: stone,
-    swatch: "#8a8379",
+    handle: "iced-monogram-jacket",
+    title: "Iced Monogram Jacket", // working name
+    price: 420, // PLACEHOLDER: price not confirmed yet
+    colour: black,
+    swatch: "#111110",
     frames: [
-      { alt: "Atelier Coat", tone: "stone" },
-      { alt: "Atelier Coat, back", tone: "sand" },
-      { alt: "Atelier Coat, detail", tone: "smoke" },
-    ],
-    sizes: sizes(["S"]),
-    details,
-  },
-  {
-    handle: "box-tee",
-    title: "Box Tee",
-    price: 75,
-    colour: bone,
-    swatch: "#e4dfd5",
-    frames: [
-      { alt: "Box Tee", tone: "sand" },
-      { alt: "Box Tee, back", tone: "stone" },
-      { alt: "Box Tee, detail", tone: "ink" },
+      { src: "/products/iced-monogram-jacket-01.webp", alt: "Iced Monogram Jacket, front", tone: "sand" },
+      { src: "/products/iced-monogram-jacket-02.webp", alt: "Iced Monogram Jacket, back with crystal monogram", tone: "sand" },
+      { src: "/products/iced-monogram-jacket-03.webp", alt: "Iced Monogram Jacket, crystal monogram detail", tone: "sand" },
     ],
     sizes: sizes(),
-    details,
-  },
-  {
-    handle: "monogram-cap",
-    title: "Monogram Cap",
-    price: 60,
-    colour: black,
-    swatch: "#0a0a09",
-    frames: [
-      { alt: "Monogram Cap", tone: "ink" },
-      { alt: "Monogram Cap, side", tone: "sand" },
+    details: [
+      { en: "Faux leather", de: "Kunstleder", tr: "Suni deri" },
+      { en: "Padded and lined", de: "Wattiert und gefüttert", tr: "Dolgulu ve astarlı" },
+      { en: "Crystal monogram on the back", de: "Monogramm aus Kristallsteinen auf dem Rücken", tr: "Sırtta kristal taşlı monogram" },
+      { en: "Two-way zip, zipped pockets", de: "Zwei-Wege-Reissverschluss, Taschen mit Reissverschluss", tr: "Çift yönlü fermuar, fermuarlı cepler" },
     ],
-    sizes: [{ label: "One size", available: true }],
-    details,
-  },
-  {
-    handle: "origin-knit",
-    title: "Origin Knit",
-    price: 240,
-    colour: bone,
-    swatch: "#e4dfd5",
-    frames: [
-      { alt: "Origin Knit", tone: "sand" },
-      { alt: "Origin Knit, back", tone: "smoke" },
-    ],
-    sizes: sizes(["S", "M", "L", "XL"]),
-    details,
   },
 ];
 
