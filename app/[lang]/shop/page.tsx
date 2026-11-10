@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { PageIntro } from "@/components/PageIntro";
 import { ProductCard } from "@/components/ProductCard";
-import { Reveal } from "@/components/Reveal";
+import { ProductGrid } from "@/components/ProductGrid";
 import { products } from "@/content/products";
 import { getTexts } from "@/lib/locale";
 
@@ -14,15 +13,13 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ShopPage() {
   const { lang, t } = await getTexts();
   return (
-    <>
-      <PageIntro label={`${t.shop.label} · ${products.length}`} title={t.shop.title} />
-      <section className="grid grid-cols-2 gap-x-3 gap-y-12 px-5 pb-32 md:grid-cols-3 md:gap-x-5 md:gap-y-20 md:px-10 md:pb-56">
-        {products.map((p) => (
-          <Reveal key={p.handle}>
-            <ProductCard product={p} lang={lang} soldOutLabel={t.shop.soldOut} />
-          </Reveal>
+    <section className="px-5 pb-28 pt-24 md:px-10 md:pb-48 md:pt-32">
+      <h1 className="display mb-10 text-center text-xl md:mb-14 md:text-2xl">{t.shop.title}</h1>
+      <ProductGrid count={products.length} countLabel={t.shop.title} viewLabel={t.shop.view}>
+        {products.map((p, i) => (
+          <ProductCard key={p.handle} product={p} lang={lang} t={t.shop} priority={i < 4} />
         ))}
-      </section>
-    </>
+      </ProductGrid>
+    </section>
   );
 }

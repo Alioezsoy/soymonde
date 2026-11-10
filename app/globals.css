@@ -49,6 +49,7 @@
   --color-stone: #8a8379;
   --color-stone-deep: #6b655c; /* stone, dark enough for small text on bone */
   --color-rule: #d2ccc1; /* hairlines on bone */
+  --color-paper: #f8f6f1; /* product tiles: a step lighter than the page */
   --font-sans: "Jost", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   --ease-slow: cubic-bezier(0.2, 0.6, 0.2, 1);

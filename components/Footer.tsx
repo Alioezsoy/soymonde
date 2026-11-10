@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { href } from "@/lib/i18n";
 import { getTexts } from "@/lib/locale";
-import { Wordmark } from "./Logo";
+import { LanguageSwitch } from "./LanguageSwitch";
+import { Monogram, Wordmark } from "./Logo";
 import { Newsletter } from "./Newsletter";
+import { Suspense } from "react";
 
+/** A quiet close: newsletter, the way through the site, and the small mark. */
 export async function Footer() {
   const { lang, t } = await getTexts();
   const nav = [
@@ -15,17 +18,17 @@ export async function Footer() {
 
   return (
     <footer className="bg-ink text-bone">
-      <div className="grid gap-16 px-5 pt-20 md:grid-cols-2 md:px-10 md:pt-32">
-        <div className="max-w-md">
+      <div className="grid gap-14 px-5 py-16 md:grid-cols-12 md:gap-10 md:px-10 md:py-24">
+        <div className="md:col-span-5">
           <p className="label text-stone">{t.newsletter.title}</p>
-          <p className="mt-4 text-lg font-light">{t.newsletter.text}</p>
-          <div className="mt-8">
+          <p className="mt-3 font-light">{t.newsletter.text}</p>
+          <div className="mt-5 max-w-sm">
             <Newsletter tone="dark" t={t.newsletter} />
           </div>
         </div>
 
-        <nav aria-label="Footer" className="grid grid-cols-2 gap-10 md:justify-self-end md:gap-24">
-          <ul className="space-y-4">
+        <nav aria-label="Footer" className="md:col-span-3 md:col-start-7">
+          <ul className="space-y-3">
             {nav.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className="label link-line">
@@ -34,20 +37,23 @@ export async function Footer() {
               </li>
             ))}
           </ul>
-          <div>
-            <p className="label text-stone">{t.base.label}</p>
-            <p className="mt-4 text-sm font-light leading-relaxed">{t.base.place}</p>
-            <p className="coord mt-2 text-stone">{t.base.coordinates}</p>
-          </div>
         </nav>
+
+        <div className="md:col-span-3">
+          <p className="label text-stone">{t.base.label}</p>
+          <p className="mt-3 text-sm font-light">{t.base.place}</p>
+          <p className="coord mt-1.5 text-stone">{t.base.coordinates}</p>
+        </div>
       </div>
 
-      <div className="px-5 pb-8 pt-24 md:px-10 md:pt-40">
-        <Wordmark tone="white" className="w-full" />
-        <div className="mt-8 flex justify-between gap-6 text-stone">
-          <span className="coord">© Soymonde</span>
-          <span className="coord text-right">{t.base.coordinates}</span>
-        </div>
+      <div className="flex items-center justify-between border-t border-bone/15 px-5 py-6 md:px-10">
+        <Link href={href(lang)} aria-label={t.nav.home} className="flex items-center gap-4">
+          <Monogram tone="white" className="w-7" />
+          <Wordmark tone="white" className="w-24" />
+        </Link>
+        <Suspense>
+          <LanguageSwitch lang={lang} label={t.nav.language} />
+        </Suspense>
       </div>
     </footer>
   );

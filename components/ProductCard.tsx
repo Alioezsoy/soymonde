@@ -1,26 +1,32 @@
 import Link from "next/link";
+import type { Dictionary } from "@/content/dictionaries";
 import { formatPrice, type Product } from "@/content/products";
 import { href, type Locale } from "@/lib/i18n";
 import { Plate } from "./Plate";
 
-/** Product tile: image, second image on hover, name, price, available sizes. */
+/** A small boxed label: New, Limited, Sold out. */
+export function Tag({ children }: { children: React.ReactNode }) {
+  return <span className="label border border-ink/60 px-1.5 py-0.5 !text-[0.5625rem]">{children}</span>;
+}
+
+/** Product tile: a light card holding image, labels, name, price and colour. */
 export function ProductCard({
   product,
   lang,
-  soldOutLabel,
+  t,
   sizes = "(min-width: 768px) 33vw, 50vw",
   priority = false,
 }: {
   product: Product;
   lang: Locale;
-  soldOutLabel: string;
+  t: Dictionary["shop"];
   sizes?: string;
   /** load the image early: for tiles visible when the page opens */
   priority?: boolean;
 }) {
   const soldOut = product.sizes.every((s) => !s.available);
   return (
-    <Link href={href(lang, `/shop/${product.handle}`)} className="group block">
+    <Link href={href(lang, `/shop/${product.handle}`)} className="group flex h-full flex-col bg-paper">
       <div className="relative">
         <Plate frame={product.frames[0]} className="aspect-[3/4]" sizes={sizes} priority={priority} />
         {product.frames[1] ? (
@@ -28,9 +34,7 @@ export function ProductCard({
             <Plate frame={product.frames[1]} className="h-full" sizes={sizes} />
           </div>
         ) : null}
-        {soldOut ? (
-          <span className="label absolute left-3 top-3 bg-bone px-2 py-1 text-ink">{soldOutLabel}</span>
-        ) : (
+        {!soldOut ? (
           <span className="coord absolute inset-x-3 bottom-3 hidden justify-between text-bone opacity-0 mix-blend-difference transition-opacity duration-700 group-hover:opacity-100 md:flex">
             {product.sizes.map((s) => (
               <span key={s.label} className={s.available ? "" : "line-through opacity-50"}>
@@ -38,16 +42,22 @@ export function ProductCard({
               </span>
             ))}
           </span>
-        )}
+        ) : null}
       </div>
-      <div className="mt-3 md:mt-4 md:flex md:items-start md:justify-between md:gap-3">
-        <div className="min-w-0">
-          <p className="text-sm md:text-base">{product.title}</p>
-          <p className="coord mt-1 truncate text-stone-deep">
-            {product.colour[lang]}
-          </p>
+
+      <div className="flex flex-1 flex-col px-3 pb-4 pt-3 md:px-4 md:pb-5">
+        <div className="flex min-h-5 flex-wrap gap-1.5">
+          {soldOut ? <Tag>{t.soldOut}</Tag> : product.tag ? <Tag>{t.tags[product.tag]}</Tag> : null}
         </div>
-        <p className="coord mt-1 shrink-0 md:mt-0 md:pt-1">{formatPrice(product.price)}</p>
+        <p lang="en" className="label mt-2">{product.title}</p>
+        <p className="coord mt-1.5 text-stone-deep">{formatPrice(product.price)}</p>
+        <span
+          className="mt-3 block size-3 rounded-full border border-ink/20"
+          style={{ background: product.swatch }}
+          title={product.colour[lang]}
+          role="img"
+          aria-label={product.colour[lang]}
+        />
       </div>
     </Link>
   );

@@ -49,6 +49,8 @@ const en = {
     shipping: "Shipping & returns",
     // PLACEHOLDER — replace with your real terms.
     shippingText: "Ships from Switzerland. Delivery times and return terms are confirmed at checkout.",
+    view: "View",
+    tags: { new: "New", limited: "Limited" },
     more: "More pieces",
   },
   cart: {
@@ -123,6 +125,8 @@ const de: Dictionary = {
     details: "Details",
     shipping: "Versand & Rückgabe",
     shippingText: "Versand aus der Schweiz. Lieferzeit und Rückgabe siehst du im Checkout.",
+    view: "Ansicht",
+    tags: { new: "New", limited: "Limited" },
     more: "Weitere Pieces",
   },
   cart: {
@@ -152,13 +156,15 @@ const de: Dictionary = {
   notFound: { title: "Off the map", back: "Zur Startseite" },
 };
 
+// English brand words are written in capitals here: the site shows them in
+// capitals anyway, and Turkish would otherwise turn their "i" into "İ".
 const tr: Dictionary = {
   meta: {
     description: "SOYMONDE. İsviçre'den streetwear ve high fashion.",
   },
   nav: {
     shop: "Shop",
-    archive: "Archive",
+    archive: "ARCHIVE",
     about: "About",
     contact: "İletişim",
     bag: "Sepet",
@@ -170,14 +176,14 @@ const tr: Dictionary = {
   },
   base: { label: "Stüdyo", place: "Rorschacherberg, İsviçre", coordinates: "47°28′N 9°30′E" },
   home: {
-    pieces: "Pieces",
+    pieces: "PIECES",
     viewAll: "Tümünü gör",
-    archive: "Archive",
+    archive: "ARCHIVE",
     discover: "Keşfet",
   },
   archive: {
-    label: "Archive",
-    kinds: { process: "Process", sketch: "Sketch", studio: "Studio" },
+    label: "ARCHIVE",
+    kinds: { process: "Process", sketch: "Sketch", studio: "STUDIO" },
     open: "Görseli aç",
     close: "Kapat",
     previous: "Önceki görsel",
@@ -185,7 +191,7 @@ const tr: Dictionary = {
   },
   shop: {
     label: "Shop",
-    title: "Pieces",
+    title: "PIECES",
     size: "Beden",
     selectSize: "Lütfen beden seç",
     add: "Sepete ekle",
@@ -195,6 +201,8 @@ const tr: Dictionary = {
     details: "Detaylar",
     shipping: "Kargo & iade",
     shippingText: "İsviçre'den gönderilir. Teslimat süresi ve iade koşulları ödeme adımında gösterilir.",
+    view: "Görünüm",
+    tags: { new: "New", limited: "LIMITED" },
     more: "Diğer parçalar",
   },
   cart: {

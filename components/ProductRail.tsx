@@ -1,3 +1,4 @@
+import type { Dictionary } from "@/content/dictionaries";
 import type { Product } from "@/content/products";
 import type { Locale } from "@/lib/i18n";
 import { ProductCard } from "./ProductCard";
@@ -6,17 +7,17 @@ import { ProductCard } from "./ProductCard";
 export function ProductRail({
   products,
   lang,
-  soldOutLabel,
+  t,
 }: {
   products: Product[];
   lang: Locale;
-  soldOutLabel: string;
+  t: Dictionary["shop"];
 }) {
   return (
-    <div className="rail -mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 md:-mx-10 md:gap-5 md:px-10 md:[scroll-padding-inline:2.5rem] [scroll-padding-inline:1.25rem]">
+    <div className="rail -mx-5 flex snap-x snap-mandatory gap-2 overflow-x-auto px-5 [scroll-padding-inline:1.25rem] md:-mx-10 md:gap-3 md:px-10 md:[scroll-padding-inline:2.5rem]">
       {products.map((p) => (
-        <div key={p.handle} className="w-[68vw] shrink-0 snap-start sm:w-[42vw] lg:w-[27vw]">
-          <ProductCard product={p} lang={lang} soldOutLabel={soldOutLabel} sizes="(min-width: 1024px) 27vw, 68vw" />
+        <div key={p.handle} className="w-[62vw] shrink-0 snap-start sm:w-[38vw] lg:w-[23vw]">
+          <ProductCard product={p} lang={lang} t={t} sizes="(min-width: 1024px) 23vw, 62vw" />
         </div>
       ))}
     </div>

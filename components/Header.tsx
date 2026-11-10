@@ -7,6 +7,7 @@ import { openCart, useCart } from "@/lib/cart";
 import { href, type Locale } from "@/lib/i18n";
 import { CartDrawer } from "./CartDrawer";
 import { LanguageSwitch } from "./LanguageSwitch";
+import { BagIcon, CloseIcon, MenuIcon } from "./Icons";
 import { Monogram, Wordmark } from "./Logo";
 
 export function Header({
@@ -32,6 +33,7 @@ export function Header({
     { href: href(lang, "/contact"), label: t.contact },
   ];
   const bag = `${t.bag} (${count})`;
+  const home = href(lang);
 
   useEffect(() => {
     let frame = 0;
@@ -72,44 +74,38 @@ export function Header({
 
   return (
     <>
-      {/* Over dark images the bar is clear and inverts against what is behind it;
+      {/* Menu left, wordmark centred, bag right.
+          Over dark images the bar is clear and inverts against what is behind it;
           everywhere else it is bone with dark text. */}
       <header
         className={`fixed inset-x-0 top-0 z-40 ${
           onDark ? "bg-transparent text-white mix-blend-difference" : "bg-bone/85 text-ink backdrop-blur-md"
         }`}
       >
-        <div className="flex h-16 items-center justify-between px-5 md:h-20 md:px-10">
-          <Link href={href(lang)} aria-label={t.home} className="-m-2 p-2">
-            <Monogram tone={onDark ? "white" : "black"} className="h-9 w-auto md:h-10" />
+        <div className="relative flex h-16 items-center justify-between px-5 md:h-20 md:px-10">
+          <button
+            type="button"
+            className="-m-3 flex items-center gap-3 p-3"
+            aria-expanded={open}
+            aria-controls="site-menu"
+            aria-label={t.menu}
+            onClick={() => setOpen(true)}
+          >
+            <MenuIcon />
+            <span className="label hidden md:inline">{t.menu}</span>
+          </button>
+
+          <Link href={home} aria-label={t.home} className="absolute left-1/2 -translate-x-1/2 p-2">
+            <Wordmark tone={onDark ? "white" : "black"} className="w-28 md:w-36" />
           </Link>
 
-          <nav aria-label={t.menu} className="hidden items-center gap-9 lg:flex">
-            {nav.map((item) => (
-              <Link key={item.href} href={item.href} className="label link-line">
-                {item.label}
-              </Link>
-            ))}
-            <button type="button" onClick={openCart} className="label link-line">
-              {bag}
-            </button>
+          <div className="flex items-center gap-7">
             <Suspense>
-              <LanguageSwitch lang={lang} label={t.language} className="ml-2" />
+              <LanguageSwitch lang={lang} label={t.language} className="hidden md:flex" />
             </Suspense>
-          </nav>
-
-          <div className="flex items-center gap-6 lg:hidden">
-            <button type="button" onClick={openCart} className="label -my-3 py-3">
-              {bag}
-            </button>
-            <button
-              type="button"
-              className="label -m-3 p-3"
-              aria-expanded={open}
-              aria-controls="site-menu"
-              onClick={() => setOpen(true)}
-            >
-              {t.menu}
+            <button type="button" onClick={openCart} aria-label={bag} className="-m-3 flex items-center gap-1.5 p-3">
+              <BagIcon />
+              <span className="coord">{count}</span>
             </button>
           </div>
         </div>
@@ -117,53 +113,62 @@ export function Header({
 
       <CartDrawer lang={lang} t={cart} closeLabel={t.close} />
 
-      {/* Full-screen menu (phone and tablet) */}
+      {/* Menu: an image on one side, the way through the site on the other */}
       <div
         id="site-menu"
         role="dialog"
         aria-modal="true"
         aria-label={t.menu}
         inert={!open}
-        className={`fixed inset-0 z-50 flex flex-col bg-bone text-ink transition-opacity duration-700 ease-slow lg:hidden ${
+        className={`fixed inset-0 z-50 grid bg-bone text-ink transition-opacity duration-700 ease-slow md:grid-cols-2 ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
-        <div className="flex h-16 items-center justify-between px-5 md:h-20 md:px-10">
-          <Link href={href(lang)} onClick={() => setOpen(false)} aria-label={t.home} className="-m-2 p-2">
-            <Monogram className="h-9 w-auto md:h-10" />
-          </Link>
-          <button type="button" className="label -m-3 p-3" onClick={() => setOpen(false)}>
-            {t.close}
-          </button>
-        </div>
+        <Link
+          href={home}
+          onClick={() => setOpen(false)}
+          aria-label={t.home}
+          className="hidden items-center justify-center bg-ink md:flex"
+        >
+          <Monogram tone="white" className="w-[min(18vw,13rem)]" />
+        </Link>
 
-        <nav aria-label={t.menu} className="flex flex-1 flex-col justify-center gap-7 px-5 md:px-10">
-          {nav.map((item, i) => (
-            <Link
-              key={item.href}
-              href={item.href}
+        <div className="flex min-h-0 flex-col">
+          <div className="flex h-16 shrink-0 items-center justify-between px-5 md:h-20 md:px-10">
+            <button
+              type="button"
+              className="-m-3 flex items-center gap-3 p-3"
+              aria-label={t.close}
               onClick={() => setOpen(false)}
-              className={`display text-2xl transition-all duration-1000 ease-slow ${
-                open ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
-              }`}
-              style={{ transitionDelay: open ? `${120 + i * 90}ms` : "0ms" }}
             >
-              {item.label}
-            </Link>
-          ))}
-          <Suspense>
-            <LanguageSwitch
-              lang={lang}
-              label={t.language}
-              onNavigate={() => setOpen(false)}
-              className="mt-8 gap-6"
-            />
-          </Suspense>
-        </nav>
+              <CloseIcon />
+              <span className="label hidden md:inline">{t.close}</span>
+            </button>
+            <Monogram className="w-9 md:hidden" />
+          </div>
 
-        <div className="flex items-end justify-between px-5 pb-8 md:px-10">
-          <Wordmark className="w-28" />
-          <span className="coord text-stone-deep">{coordinates}</span>
+          <nav aria-label={t.menu} className="flex flex-1 flex-col justify-center gap-6 px-5 md:gap-8 md:px-16">
+            {nav.map((item, i) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className={`display text-2xl transition-all duration-1000 ease-slow md:text-3xl ${
+                  open ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+                }`}
+                style={{ transitionDelay: open ? `${120 + i * 90}ms` : "0ms" }}
+              >
+                <span className="link-line">{item.label}</span>
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-end justify-between px-5 pb-8 md:px-16 md:pb-10">
+            <Suspense>
+              <LanguageSwitch lang={lang} label={t.language} onNavigate={() => setOpen(false)} className="gap-6" />
+            </Suspense>
+            <span className="coord text-stone-deep">{coordinates}</span>
+          </div>
         </div>
       </div>
     </>

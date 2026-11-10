@@ -11,6 +11,8 @@ export type Product = {
   title: string;
   price: number; // CHF
   colour: Localized;
+  swatch: string; // the colour as a dot
+  tag?: "new" | "limited";
   frames: Frame[]; // first = main image, second = shown on hover
   sizes: Size[];
   details: Localized[];
@@ -33,9 +35,11 @@ const details: Localized[] = [
 export const products: Product[] = [
   {
     handle: "monogram-hoodie",
+    tag: "new",
     title: "Monogram Hoodie",
     price: 180,
     colour: black,
+    swatch: "#0a0a09",
     frames: [
       { alt: "Monogram Hoodie", tone: "ink" },
       { alt: "Monogram Hoodie, back", tone: "smoke" },
@@ -46,9 +50,11 @@ export const products: Product[] = [
   },
   {
     handle: "atelier-coat",
+    tag: "limited",
     title: "Atelier Coat",
     price: 420,
     colour: stone,
+    swatch: "#8a8379",
     frames: [
       { alt: "Atelier Coat", tone: "stone" },
       { alt: "Atelier Coat, back", tone: "sand" },
@@ -62,6 +68,7 @@ export const products: Product[] = [
     title: "Box Tee",
     price: 75,
     colour: bone,
+    swatch: "#e4dfd5",
     frames: [
       { alt: "Box Tee", tone: "sand" },
       { alt: "Box Tee, back", tone: "stone" },
@@ -75,6 +82,7 @@ export const products: Product[] = [
     title: "Wide Trouser",
     price: 210,
     colour: black,
+    swatch: "#0a0a09",
     frames: [
       { alt: "Wide Trouser", tone: "smoke" },
       { alt: "Wide Trouser, back", tone: "ink" },
@@ -88,6 +96,7 @@ export const products: Product[] = [
     title: "Monogram Cap",
     price: 60,
     colour: black,
+    swatch: "#0a0a09",
     frames: [
       { alt: "Monogram Cap", tone: "ink" },
       { alt: "Monogram Cap, side", tone: "sand" },
@@ -100,6 +109,7 @@ export const products: Product[] = [
     title: "Origin Knit",
     price: 240,
     colour: bone,
+    swatch: "#e4dfd5",
     frames: [
       { alt: "Origin Knit", tone: "sand" },
       { alt: "Origin Knit, back", tone: "smoke" },
