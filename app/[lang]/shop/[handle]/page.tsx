@@ -39,7 +39,6 @@ async function ProductView({ params }: { params: Props["params"] }) {
   const { lang, t } = await getTexts();
 
   const more = products.filter((p) => p.handle !== product.handle);
-  const soldOut = product.sizes.every((size) => !size.available);
 
   return (
     <>
@@ -69,7 +68,7 @@ async function ProductView({ params }: { params: Props["params"] }) {
               <span lang="en" className="truncate text-ink">{product.title}</span>
             </nav>
             <div className="mt-6 flex min-h-5 gap-1.5">
-              {soldOut ? <Tag>{t.shop.soldOut}</Tag> : product.tag ? <Tag>{t.shop.tags[product.tag]}</Tag> : null}
+              {product.tag ? <Tag>{t.shop.tags[product.tag]}</Tag> : null}
             </div>
             <h1 lang="en" className="display mt-3 text-xl md:text-2xl">{product.title}</h1>
             <p className="coord mt-3 text-sm">{formatPrice(product.price)}</p>

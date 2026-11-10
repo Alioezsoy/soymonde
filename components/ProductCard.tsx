@@ -4,7 +4,7 @@ import { formatPrice, type Product } from "@/content/products";
 import { href, type Locale } from "@/lib/i18n";
 import { Plate } from "./Plate";
 
-/** A small boxed label: New, Limited, Sold out. */
+/** A small boxed label: New, Limited. */
 export function Tag({ children }: { children: React.ReactNode }) {
   return <span className="label border border-ink/60 px-1.5 py-0.5 !text-[0.5625rem]">{children}</span>;
 }
@@ -24,7 +24,6 @@ export function ProductCard({
   /** load the image early: for tiles visible when the page opens */
   priority?: boolean;
 }) {
-  const soldOut = product.sizes.every((s) => !s.available);
   return (
     <Link href={href(lang, `/shop/${product.handle}`)} className="group flex h-full flex-col bg-paper">
       <div className="relative">
@@ -34,20 +33,16 @@ export function ProductCard({
             <Plate frame={product.frames[1]} className="h-full" sizes={sizes} />
           </div>
         ) : null}
-        {!soldOut ? (
-          <span className="coord absolute inset-x-3 bottom-3 hidden justify-between text-bone opacity-0 mix-blend-difference transition-opacity duration-700 group-hover:opacity-100 md:flex">
+        <span className="coord absolute inset-x-3 bottom-3 hidden justify-between text-bone opacity-0 mix-blend-difference transition-opacity duration-700 group-hover:opacity-100 md:flex">
             {product.sizes.map((s) => (
-              <span key={s.label} className={s.available ? "" : "line-through opacity-50"}>
-                {s.label}
-              </span>
+              <span key={s.label}>{s.label}</span>
             ))}
           </span>
-        ) : null}
       </div>
 
       <div className="flex flex-1 flex-col px-3 pb-4 pt-3 md:px-4 md:pb-5">
         <div className="flex min-h-5 flex-wrap gap-1.5">
-          {soldOut ? <Tag>{t.soldOut}</Tag> : product.tag ? <Tag>{t.tags[product.tag]}</Tag> : null}
+          {product.tag ? <Tag>{t.tags[product.tag]}</Tag> : null}
         </div>
         <p lang="en" className="label mt-2">{product.title}</p>
         <p className="coord mt-1.5 text-stone-deep">{formatPrice(product.price)}</p>
