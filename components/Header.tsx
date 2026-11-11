@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
+import { categories, genders, shopQuery } from "@/content/categories";
 import type { Dictionary } from "@/content/dictionaries";
 import { openCart, useCart } from "@/lib/cart";
 import { href, type Locale } from "@/lib/i18n";
@@ -147,19 +148,39 @@ export function Header({
             <Monogram className="w-9 md:hidden" />
           </div>
 
-          <nav aria-label={t.menu} className="flex flex-1 flex-col justify-center gap-6 px-5 md:gap-8 md:px-16">
+          <nav aria-label={t.menu} className="flex min-h-0 flex-1 flex-col justify-center gap-5 overflow-y-auto px-5 py-6 md:gap-7 md:px-16">
             {nav.map((item, i) => (
-              <Link
+              <div
                 key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className={`display text-2xl transition-all duration-1000 ease-slow md:text-3xl ${
+                className={`transition-all duration-1000 ease-slow ${
                   open ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
                 }`}
                 style={{ transitionDelay: open ? `${120 + i * 90}ms` : "0ms" }}
               >
-                <span className="link-line">{item.label}</span>
-              </Link>
+                <Link href={item.href} onClick={() => setOpen(false)} className="display text-2xl md:text-3xl">
+                  <span className="link-line">{item.label}</span>
+                </Link>
+                {/* the shop's categories, right under "Shop" */}
+                {i === 0 ? (
+                  <ul lang="en" className="mb-2 mt-4 grid grid-cols-2 gap-x-6 gap-y-3 md:max-w-md">
+                    {[...genders, ...categories].map((entry) => (
+                      <li key={entry.key}>
+                        <Link
+                          href={`${item.href}${
+                            entry.key === "men" || entry.key === "women"
+                              ? shopQuery(entry.key, null)
+                              : shopQuery(null, entry.key)
+                          }`}
+                          onClick={() => setOpen(false)}
+                          className="label link-line text-stone-deep hover:text-ink"
+                        >
+                          {entry.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
             ))}
           </nav>
 

@@ -12,7 +12,8 @@ export function ProductGrid({
 }: {
   children: ReactNode;
   count: number;
-  countLabel: string;
+  /** what is being counted, e.g. "Pieces" or the chosen category */
+  countLabel: ReactNode;
   viewLabel: string;
   /** optional link shown next to the view switch, e.g. "View all" */
   action?: ReactNode;
@@ -35,11 +36,11 @@ export function ProductGrid({
 
   return (
     <>
-      <div className="mb-4 flex items-center justify-between md:mb-6">
-        <p className="label">
+      <div className="mb-4 flex items-center justify-between gap-4 md:mb-6">
+        <p className="label min-w-0 truncate">
           {countLabel} <span className="text-stone-deep">· {count}</span>
         </p>
-        <div className="flex items-center gap-6">
+        <div className="flex shrink-0 items-center gap-6">
           <div className="flex items-center gap-2" role="group" aria-label={viewLabel}>
             <span className="label mr-1 hidden text-stone-deep sm:inline">{viewLabel}</span>
             {option(false, "1", "2")}

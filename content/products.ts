@@ -3,6 +3,7 @@
 // Shopify returns, so the pages stay the same.
 import type { Localized } from "@/lib/i18n";
 import type { Frame } from "./archive";
+import type { Gender, ProductType } from "./categories";
 
 export type Size = { label: string; available: boolean };
 
@@ -25,6 +26,10 @@ export type Product = {
   // further colours, if the piece comes in more than one
   otherColours?: Variant[];
   tag?: "new" | "limited";
+  // where the piece is filed in the shop
+  type: ProductType;
+  gender: Gender[]; // both = unisex
+  basic?: boolean; // also listed under Basics
   sizes: Size[];
   details: Localized[];
 };
@@ -50,6 +55,8 @@ export const products: Product[] = [
   // The first real piece. Photos are in /public/products.
   {
     handle: "emerald-balaclava",
+    type: "accessories",
+    gender: ["men", "women"],
     tag: "new",
     title: "Emerald Balaclava", // working name
     price: 199,
@@ -69,6 +76,8 @@ export const products: Product[] = [
   },
   {
     handle: "v001-hoodie",
+    type: "sweats",
+    gender: ["men", "women"],
     title: "V001 Hoodie", // working name
     price: 180,
     colour: emerald,
@@ -87,6 +96,8 @@ export const products: Product[] = [
   },
   {
     handle: "chess-jeans",
+    type: "bottoms",
+    gender: ["men", "women"],
     title: "Chess Jeans",
     price: 210, // PLACEHOLDER: price not confirmed yet
     colour: black,
@@ -118,6 +129,8 @@ export const products: Product[] = [
   },
   {
     handle: "iced-monogram-jacket",
+    type: "jackets",
+    gender: ["men", "women"],
     title: "Iced Monogram Jacket", // working name
     price: 420, // PLACEHOLDER: price not confirmed yet
     colour: black,
