@@ -148,6 +148,28 @@ export const products: Product[] = [
       { en: "Two-way zip, zipped pockets", de: "Zwei-Wege-Reissverschluss, Taschen mit Reissverschluss", tr: "Çift yönlü fermuar, fermuarlı cepler" },
     ],
   },
+  {
+    handle: "essentials-tee",
+    type: "tops",
+    gender: ["men", "women"],
+    basic: true,
+    title: "Essentials Tee", // working name
+    price: 75, // PLACEHOLDER: price not confirmed yet
+    colour: black,
+    swatch: "#111110",
+    frames: [
+      { src: "/products/essentials-tee-01.webp", alt: "Essentials Tee, front", tone: "sand" },
+      { src: "/products/essentials-tee-02.webp", alt: "Essentials Tee, back", tone: "sand" },
+      { src: "/products/essentials-tee-03.webp", alt: "Essentials Tee, collar and embroidered monogram", tone: "sand" },
+    ],
+    sizes: sizes(), // PLACEHOLDER: sizes not confirmed yet
+    details: [
+      { en: "Oversized fit", de: "Oversized geschnitten", tr: "Oversize kesim" },
+      { en: "Tonal embroidered monogram on the chest", de: "Ton-in-Ton gesticktes Monogramm auf der Brust", tr: "Göğüste ton sür ton işlemeli monogram" },
+      { en: "Metal monogram plate at the hem", de: "Metallplakette mit Monogramm am Saum", tr: "Etekte monogramlı metal plaka" },
+      { en: "Material to follow", de: "Material folgt", tr: "Kumaş bilgisi eklenecek" },
+    ],
+  },
 ];
 
 export function getProduct(handle: string) {
