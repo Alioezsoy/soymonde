@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { categories, genders, shopQuery } from "@/content/categories";
+import { collections } from "@/content/collections";
 import type { Dictionary } from "@/content/dictionaries";
 import { openCart, useCart } from "@/lib/cart";
 import { href, type Locale } from "@/lib/i18n";
@@ -29,6 +30,7 @@ export function Header({
 
   const nav = [
     { href: href(lang, "/shop"), label: t.shop },
+    ...collections.map((c) => ({ href: href(lang, `/collection/${c.slug}`), label: c.title })),
     { href: href(lang, "/archive"), label: t.archive },
     { href: href(lang, "/about"), label: t.about },
     { href: href(lang, "/contact"), label: t.contact },
@@ -157,7 +159,7 @@ export function Header({
                 }`}
                 style={{ transitionDelay: open ? `${120 + i * 90}ms` : "0ms" }}
               >
-                <Link href={item.href} onClick={() => setOpen(false)} className="display text-2xl md:text-3xl">
+                <Link href={item.href} onClick={() => setOpen(false)} lang="en" className="display text-2xl md:text-3xl">
                   <span className="link-line">{item.label}</span>
                 </Link>
                 {/* the shop's categories, right under "Shop" */}

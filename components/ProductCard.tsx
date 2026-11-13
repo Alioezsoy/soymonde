@@ -34,7 +34,7 @@ export function ProductCard({
           </div>
         ) : null}
         <span className="coord absolute inset-x-3 bottom-3 hidden justify-between text-bone opacity-0 mix-blend-difference transition-opacity duration-700 group-hover:opacity-100 md:flex">
-            {product.sizes.map((s) => (
+            {(product.upcoming ? [] : product.sizes).map((s) => (
               <span key={s.label}>{s.label}</span>
             ))}
           </span>
@@ -45,9 +45,11 @@ export function ProductCard({
           {product.tag ? <Tag>{t.tags[product.tag]}</Tag> : null}
         </div>
         <p lang="en" className="label mt-2">{product.title}</p>
-        <p className="coord mt-1.5 text-stone-deep">{formatPrice(product.price)}</p>
-        <span className="mt-3 flex gap-1.5">
-          {variantsOf(product).map((v) => (
+        <p className="coord mt-1.5 text-stone-deep">
+          {product.price === undefined ? t.soon : formatPrice(product.price)}
+        </p>
+        <span className="mt-3 flex min-h-3 gap-1.5">
+          {(product.upcoming ? [] : variantsOf(product)).map((v) => (
             <span
               key={v.key}
               className="block size-3 rounded-full border border-ink/20"

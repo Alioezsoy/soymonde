@@ -17,7 +17,7 @@ import { ProductGrid } from "./ProductGrid";
 
 export type ShopItem = {
   handle: string;
-  type: ProductType;
+  types: ProductType[];
   gender: Gender[];
   basic: boolean;
   card: ReactNode;
@@ -42,7 +42,7 @@ export function ShopBrowser({ items, t }: { items: ShopItem[]; t: Dictionary["sh
   const shown = items.filter(
     (item) =>
       (!gender || item.gender.includes(gender)) &&
-      (!category || (category === "basics" ? item.basic : item.type === category)),
+      (!category || (category === "basics" ? item.basic : item.types.includes(category))),
   );
 
   const chip = (label: string, active: boolean, onClick: () => void, english = true) => (

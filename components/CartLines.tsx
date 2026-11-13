@@ -22,7 +22,7 @@ export function CartLines({
       const product = getProduct(line.handle);
       return product ? [{ line, product, variant: getVariant(product, line.colour) }] : [];
     });
-  const subtotal = lines.reduce((sum, { line, product }) => sum + product.price * line.quantity, 0);
+  const subtotal = lines.reduce((sum, { line, product }) => sum + (product.price ?? 0) * line.quantity, 0);
 
   if (lines.length === 0) {
     return (
@@ -51,7 +51,7 @@ export function CartLines({
             <div className="flex min-w-0 flex-1 flex-col">
               <div className="flex items-start justify-between gap-3">
                 <p className="text-sm md:text-base">{product.title}</p>
-                <p className="coord shrink-0 pt-1">{formatPrice(product.price * line.quantity)}</p>
+                <p className="coord shrink-0 pt-1">{formatPrice((product.price ?? 0) * line.quantity)}</p>
               </div>
               <p className="coord mt-1 text-stone-deep">
                 {variant.colour[lang]} · {t.size} {line.size}

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { collections } from "@/content/collections";
 import type { Dictionary } from "@/content/dictionaries";
 import { formatPrice, variantsOf, type Product } from "@/content/products";
 import { href, type Locale } from "@/lib/i18n";
@@ -21,6 +22,7 @@ export function ProductDetail({
   lang: Locale;
   t: Dictionary["shop"];
 }) {
+  const collection = collections.find((c) => c.key === product.collection);
   const variants = variantsOf(product);
   const [colour, setColour] = useState(variants[0].key);
   const variant = variants.find((v) => v.key === colour) ?? variants[0];
@@ -54,9 +56,15 @@ export function ProductDetail({
       <div className="px-5 pt-6 md:col-span-5 md:px-0 md:pt-0 lg:col-span-4 lg:col-start-9">
         <div className="md:sticky md:top-28">
           <nav aria-label="Breadcrumb" className="coord flex gap-2 text-stone-deep">
-            <Link href={href(lang, "/shop")} className="link-line">
-              {t.label}
-            </Link>
+            {collection ? (
+              <Link href={href(lang, `/collection/${collection.slug}`)} lang="en" className="link-line">
+                {collection.title}
+              </Link>
+            ) : (
+              <Link href={href(lang, "/shop")} className="link-line">
+                {t.label}
+              </Link>
+            )}
             <span aria-hidden="true">/</span>
             <span lang="en" className="truncate text-ink">
               {product.title}
@@ -66,9 +74,9 @@ export function ProductDetail({
           <h1 lang="en" className="display mt-3 text-xl md:text-2xl">
             {product.title}
           </h1>
-          <p className="coord mt-3 text-sm">{formatPrice(product.price)}</p>
+          <p className="coord mt-3 text-sm">{product.price === undefined ? t.soon : formatPrice(product.price)}</p>
 
-          <div className="mt-8 border-t border-rule pt-5">
+          <div className={`mt-8 border-t border-rule pt-5 ${product.upcoming ? "hidden" : ""}`}>
             <p className="label text-stone-deep">
               {t.colour} <span className="ml-2 text-ink">{variant.colour[lang]}</span>
             </p>
@@ -95,7 +103,7 @@ export function ProductDetail({
           </div>
 
           <div className="mt-10 border-t border-rule">
-            <details className="group/d border-b border-rule" open>
+            <details className={`group/d border-b border-rule ${product.details.length ? "" : "hidden"}`} open>
               <summary className="label flex cursor-pointer list-none items-center justify-between py-5 [&::-webkit-details-marker]:hidden">
                 {t.details}
                 <ChevronIcon className="transition-transform duration-500 group-open/d:rotate-180" />

@@ -16,7 +16,7 @@ export default async function ShopPage() {
 
   const items: ShopItem[] = products.map((p, i) => ({
     handle: p.handle,
-    type: p.type,
+    types: p.types,
     gender: p.gender,
     basic: Boolean(p.basic),
     card: <ProductCard product={p} lang={lang} t={t.shop} priority={i < 4} />,

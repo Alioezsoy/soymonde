@@ -54,6 +54,7 @@ const en = {
     shipping: "Shipping & returns",
     // PLACEHOLDER — replace with your real terms.
     shippingText: "Ships from Switzerland. Delivery times and return terms are confirmed at checkout.",
+    soon: "Coming soon",
     all: "All",
     empty: "Nothing here yet.",
     filter: "Filter",
@@ -138,6 +139,7 @@ const de: Dictionary = {
     details: "Details",
     shipping: "Versand & Rückgabe",
     shippingText: "Versand aus der Schweiz. Lieferzeit und Rückgabe siehst du im Checkout.",
+    soon: "Demnächst",
     all: "Alle",
     empty: "Hier kommt bald etwas.",
     filter: "Filter",
@@ -222,6 +224,7 @@ const tr: Dictionary = {
     details: "Detaylar",
     shipping: "Kargo & iade",
     shippingText: "İsviçre'den gönderilir. Teslimat süresi ve iade koşulları ödeme adımında gösterilir.",
+    soon: "Yakında",
     all: "Tümü",
     empty: "Burada henüz bir şey yok.",
     filter: "Filtre",
