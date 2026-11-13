@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { social } from "@/content/company";
 import { href } from "@/lib/i18n";
 import { getTexts } from "@/lib/locale";
 import { LanguageSwitch } from "./LanguageSwitch";
@@ -48,6 +49,15 @@ export async function Footer() {
           <p className="label text-stone">{t.base.label}</p>
           <p className="mt-3 text-sm font-light">{t.base.place}</p>
           <p className="coord mt-1.5 text-stone">{t.base.coordinates}</p>
+          <ul className="mt-8 space-y-3">
+            {social.map((s) => (
+              <li key={s.url}>
+                <a href={s.url} target="_blank" rel="noopener noreferrer" lang="en" className="label link-line">
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 

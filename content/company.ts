@@ -12,3 +12,8 @@ export const company = {
   // PLACEHOLDER: days a customer has to send a piece back. Your decision.
   returnDays: 14,
 };
+
+export const social = [
+  { label: "Instagram", handle: "@soymonde", url: "https://www.instagram.com/soymonde" },
+  { label: "TikTok", handle: "@soymondeclo", url: "https://www.tiktok.com/@soymondeclo" },
+];
