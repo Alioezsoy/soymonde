@@ -8,6 +8,12 @@ import type { CollectionKey } from "./collections";
 
 export type Size = { label: string; available: boolean };
 
+export const measureKeys = ["length", "chest", "shoulder", "sleeve", "waist", "inseam"] as const;
+export type MeasureKey = (typeof measureKeys)[number];
+/** The size guide: centimetres, measured flat. One number per size,
+    in the same order as the sizes (S, M, L, XL). */
+export type Measurements = Partial<Record<MeasureKey, number[]>>;
+
 /** One colour of a product, with its own photos. */
 export type Variant = {
   key: string; // short id, used in the bag
@@ -34,6 +40,7 @@ export type Product = {
   gender: Gender[]; // both = unisex
   basic?: boolean; // also listed under Basics
   sizes: Size[];
+  measurements?: Measurements; // shows the size guide on the product page
   details: Localized[];
 };
 
@@ -359,6 +366,13 @@ export const products: Product[] = [
       },
     ],
     sizes: sizes(), // PLACEHOLDER: sizes not confirmed yet
+    // PLACEHOLDER: example numbers to show the size guide, not measured
+    measurements: {
+      length: [70, 72, 74, 76],
+      chest: [58, 61, 64, 67],
+      shoulder: [56, 58, 60, 62],
+      sleeve: [23, 24, 25, 26],
+    },
     details: [
       {
         en: "Oversized fit",

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { collections } from "@/content/collections";
 import type { Dictionary } from "@/content/dictionaries";
-import { formatPrice, variantsOf, type Product } from "@/content/products";
+import { formatPrice, measureKeys, variantsOf, type Product } from "@/content/products";
 import { href, type Locale } from "@/lib/i18n";
 import { AddToBag } from "./AddToBag";
 import { ChevronIcon } from "./Icons";
@@ -26,6 +26,7 @@ export function ProductDetail({
   const variants = variantsOf(product);
   const [colour, setColour] = useState(variants[0].key);
   const variant = variants.find((v) => v.key === colour) ?? variants[0];
+  const measures = measureKeys.filter((k) => product.measurements?.[k]);
 
   return (
     <div className="pt-16 md:grid md:grid-cols-12 md:gap-10 md:px-10 md:pt-24">
@@ -114,12 +115,56 @@ export function ProductDetail({
                 ))}
               </ul>
             </details>
+            {measures.length ? (
+              <details className="group/d border-b border-rule">
+                <summary className="label flex cursor-pointer list-none items-center justify-between py-5 [&::-webkit-details-marker]:hidden">
+                  {t.sizeGuide}
+                  <ChevronIcon className="transition-transform duration-500 group-open/d:rotate-180" />
+                </summary>
+                <div className="pb-6">
+                  <table className="coord w-full text-left">
+                    <thead>
+                      <tr className="border-b border-rule text-stone-deep">
+                        <th scope="col" className="py-2.5 pr-3 font-normal">
+                          <span className="sr-only">{t.size}</span>
+                        </th>
+                        {product.sizes.map((s) => (
+                          <th key={s.label} scope="col" className="py-2.5 text-right font-normal">
+                            {s.label}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {measures.map((k) => (
+                        <tr key={k} className="border-b border-rule/60">
+                          <th scope="row" className="py-2.5 pr-3 font-normal text-stone-deep">
+                            {t.measures[k]}
+                          </th>
+                          {product.sizes.map((s, i) => (
+                            <td key={s.label} className="py-2.5 text-right tabular-nums">
+                              {product.measurements?.[k]?.[i] ?? "–"}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <p className="mt-4 text-sm font-light text-stone-deep">{t.measureNote}</p>
+                </div>
+              </details>
+            ) : null}
             <details className="group/d border-b border-rule">
               <summary className="label flex cursor-pointer list-none items-center justify-between py-5 [&::-webkit-details-marker]:hidden">
                 {t.shipping}
                 <ChevronIcon className="transition-transform duration-500 group-open/d:rotate-180" />
               </summary>
-              <p className="pb-6 font-light text-stone-deep">{t.shippingText}</p>
+              <p className="pb-6 font-light text-stone-deep">
+                {t.shippingText}{" "}
+                <Link href={href(lang, "/legal/shipping")} className="link-line text-ink">
+                  {t.shippingMore}
+                </Link>
+              </p>
             </details>
           </div>
         </div>

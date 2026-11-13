@@ -15,6 +15,10 @@ export async function Footer() {
     { href: href(lang, "/about"), label: t.nav.about },
     { href: href(lang, "/contact"), label: t.nav.contact },
   ];
+  const legal = (["imprint", "privacy", "terms", "shipping"] as const).map((slug) => ({
+    href: href(lang, `/legal/${slug}`),
+    label: t.legal[slug],
+  }));
 
   return (
     <footer className="bg-ink text-bone">
@@ -45,6 +49,18 @@ export async function Footer() {
           <p className="coord mt-1.5 text-stone">{t.base.coordinates}</p>
         </div>
       </div>
+
+      <nav aria-label={t.legal.label} className="border-t border-bone/15 px-5 py-6 md:px-10">
+        <ul className="flex flex-wrap gap-x-7 gap-y-3">
+          {legal.map((item) => (
+            <li key={item.href}>
+              <Link href={item.href} className="coord link-line text-bone/60">
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
       <div className="flex items-center justify-between border-t border-bone/15 px-5 py-6 md:px-10">
         <Link href={href(lang)} aria-label={t.nav.home} className="flex items-center gap-4">

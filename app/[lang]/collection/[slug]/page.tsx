@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { Countdown } from "@/components/Countdown";
 import { Monogram } from "@/components/Logo";
 import { Newsletter } from "@/components/Newsletter";
 import { ProductCard } from "@/components/ProductCard";
@@ -35,6 +36,14 @@ async function CollectionView({ params }: { params: Props["params"] }) {
   if (!collection) notFound();
   const { lang, t } = await getTexts();
   const pieces = inCollection(collection.key);
+  const dropAt = collection.upcoming ? collection.dropAt : undefined;
+  const dropDate = dropAt
+    ? new Intl.DateTimeFormat(lang, {
+        dateStyle: "long",
+        timeStyle: "short",
+        timeZone: "Europe/Zurich",
+      }).format(new Date(dropAt))
+    : null;
 
   return (
     <>
@@ -47,7 +56,14 @@ async function CollectionView({ params }: { params: Props["params"] }) {
         <h1 lang="en" className="display relative text-3xl md:text-6xl">
           {collection.title}
         </h1>
-        {collection.upcoming ? <p className="label relative mt-6 text-bone/60">{t.shop.soon}</p> : null}
+        {dropAt ? (
+          <div className="relative mt-10 md:mt-14">
+            <Countdown to={dropAt} units={t.drop.units} />
+            <p className="coord mt-8 text-bone/60">{dropDate}</p>
+          </div>
+        ) : collection.upcoming ? (
+          <p className="label relative mt-6 text-bone/60">{t.shop.soon}</p>
+        ) : null}
       </header>
 
       <section className="px-5 pt-10 md:px-10 md:pt-16">
@@ -58,11 +74,11 @@ async function CollectionView({ params }: { params: Props["params"] }) {
         </ProductGrid>
       </section>
 
-      {/* Before the drop: the newsletter is the way to hear about it first */}
+      {/* Before the drop: leave an email to get the link first */}
       {collection.upcoming ? (
         <section className="mx-auto max-w-md px-5 py-28 text-center md:py-40">
-          <p className="label text-stone-deep">{t.newsletter.title}</p>
-          <p className="mt-4 text-lg font-light">{t.newsletter.text}</p>
+          <p className="label text-stone-deep">{t.drop.early}</p>
+          <p className="mt-4 text-lg font-light">{t.drop.earlyText}</p>
           <div className="mt-8 text-left">
             <Newsletter tone="light" t={t.newsletter} />
           </div>

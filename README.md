@@ -38,3 +38,10 @@ Fotos in den Ordner `public/archive` legen. Sie erscheinen automatisch auf der S
     03-process-cutting.jpg
 
 Solange der Ordner keine Fotos enthält, zeigt die Seite Platzhalter.
+
+## Rechtliche Seiten, Grössentabelle, Countdown
+
+- **Deine Angaben für Impressum & Co.:** `content/company.ts` (Adresse, E-Mail, Rückgabefrist). Leere Felder zeigen auf der Website «Folgt».
+- **Texte der rechtlichen Seiten:** `content/legal.ts`. Das sind Entwürfe – vor dem Shop-Start prüfen lassen.
+- **Grössentabelle:** in `content/products.ts` beim Piece `measurements` eintragen (Zentimeter, eine Zahl pro Grösse).
+- **Countdown zum Drop:** in `content/collections.ts` bei der Kollektion `dropAt` setzen, z. B. `dropAt: "2027-03-12T18:00:00+01:00"`.
