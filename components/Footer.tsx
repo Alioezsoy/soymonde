@@ -14,6 +14,7 @@ export async function Footer() {
     { href: href(lang, "/archive"), label: t.nav.archive },
     { href: href(lang, "/about"), label: t.nav.about },
     { href: href(lang, "/contact"), label: t.nav.contact },
+    { href: href(lang, "/faq"), label: t.faq.label },
   ];
   const legal = (["imprint", "privacy", "terms", "shipping"] as const).map((slug) => ({
     href: href(lang, `/legal/${slug}`),

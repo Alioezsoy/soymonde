@@ -104,6 +104,7 @@ const en = {
     draft: "Draft. This page is being finalised before the shop opens.",
     toFollow: "To follow",
   },
+  faq: { label: "FAQ", title: "Questions" },
   notFound: { title: "Off the map", back: "Back to start" },
 };
 
@@ -207,6 +208,7 @@ const de: Dictionary = {
     draft: "Entwurf. Diese Seite wird fertiggestellt, bevor der Shop öffnet.",
     toFollow: "Folgt",
   },
+  faq: { label: "FAQ", title: "Fragen" },
   notFound: { title: "Off the map", back: "Zur Startseite" },
 };
 
@@ -310,6 +312,7 @@ const tr: Dictionary = {
     draft: "Taslak. Bu sayfa, mağaza açılmadan önce tamamlanacak.",
     toFollow: "Eklenecek",
   },
+  faq: { label: "SSS", title: "Sorular" },
   notFound: { title: "Off the map", back: "Ana sayfaya dön" },
 };
 
