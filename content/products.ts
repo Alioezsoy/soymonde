@@ -83,11 +83,23 @@ export const products: Product[] = [
     types: ["tops"],
     gender: ["men", "women"],
     title: "Ghost Boxy Tee", // working name
-    colour: ghostColour,
-    swatch: "#e9e6df",
-    frames: [{ alt: "Ghost Boxy Tee", tone: "sand" }], // PLACEHOLDER: photos to follow
+    colour: white,
+    swatch: "#f4f2ed",
+    frames: [
+      { src: "/products/ghost-boxy-tee-01.webp", alt: "Ghost Boxy Tee, front", tone: "sand" },
+      { src: "/products/ghost-boxy-tee-02.webp", alt: "Ghost Boxy Tee, back with Afterimage print", tone: "sand" },
+      { src: "/products/ghost-boxy-tee-03.webp", alt: "Ghost Boxy Tee, print detail", tone: "sand" },
+      { src: "/products/ghost-boxy-tee-04.webp", alt: "Ghost Boxy Tee, rib collar", tone: "sand" },
+      { src: "/products/ghost-boxy-tee-05.webp", alt: "Ghost Boxy Tee, cloth tag at the side seam", tone: "sand" },
+    ],
     sizes: notYet,
-    details: [],
+    details: [
+      { en: "Compact boxy fit, slightly dropped shoulder", de: "Kompakter Boxy Fit, leicht überschnittene Schulter", tr: "Kompakt boxy kesim, hafif düşük omuz" },
+      { en: "High rib crew neck", de: "Hoher Rippkragen", tr: "Yüksek ribana yaka" },
+      { en: "SOYMONDE wordmark on the chest", de: "SOYMONDE Schriftzug auf der Brust", tr: "Göğüste SOYMONDE yazısı" },
+      { en: "Afterimage print on the back", de: "Afterimage-Print auf dem Rücken", tr: "Sırtta Afterimage baskı" },
+      { en: "Cloth tag with monogram at the side seam", de: "Stofflabel mit Monogramm an der Seitennaht", tr: "Yan dikişte monogramlı kumaş etiket" },
+    ],
   },
   {
     handle: "ghost-oversized-tee",
@@ -109,11 +121,23 @@ export const products: Product[] = [
     types: ["tops"],
     gender: ["men", "women"],
     title: "Ghost Longsleeve", // working name
-    colour: ghostColour,
-    swatch: "#e9e6df",
-    frames: [{ alt: "Ghost Longsleeve", tone: "sand" }], // PLACEHOLDER: photos to follow
+    colour: white,
+    swatch: "#f4f2ed",
+    frames: [
+      { src: "/products/ghost-longsleeve-01.webp", alt: "Ghost Longsleeve, front", tone: "sand" },
+      { src: "/products/ghost-longsleeve-02.webp", alt: "Ghost Longsleeve, back", tone: "sand" },
+      { src: "/products/ghost-longsleeve-03.webp", alt: "Ghost Longsleeve, smoke print on the sleeve", tone: "sand" },
+      { src: "/products/ghost-longsleeve-04.webp", alt: "Ghost Longsleeve, rib collar", tone: "sand" },
+      { src: "/products/ghost-longsleeve-05.webp", alt: "Ghost Longsleeve, cloth tag at the side seam", tone: "sand" },
+    ],
     sizes: notYet,
-    details: [],
+    details: [
+      { en: "Dropped shoulder, long sleeves", de: "Überschnittene Schulter, lange Ärmel", tr: "Düşük omuz, uzun kol" },
+      { en: "High rib crew neck", de: "Hoher Rippkragen", tr: "Yüksek ribana yaka" },
+      { en: "SOYMONDE wordmark on the chest", de: "SOYMONDE Schriftzug auf der Brust", tr: "Göğüste SOYMONDE yazısı" },
+      { en: "Smoke print on both sleeves", de: "Rauch-Print auf beiden Ärmeln", tr: "İki kolda duman baskı" },
+      { en: "Cloth tag with monogram at the side seam", de: "Stofflabel mit Monogramm an der Seitennaht", tr: "Yan dikişte monogramlı kumaş etiket" },
+    ],
   },
   {
     handle: "ghost-zip-jacket",
