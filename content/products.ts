@@ -62,12 +62,6 @@ const sizes = (notInStock: string[] = []): Size[] =>
 
 /** For pieces that are not released yet: every size leads to "Notify me". */
 const notYet: Size[] = sizes(["S", "M", "L", "XL"]);
-// PLACEHOLDER colour for unreleased pieces (not shown on the site)
-const ghostColour: Localized = {
-  en: "To follow",
-  de: "Folgt",
-  tr: "Eklenecek",
-};
 
 const black: Localized = { en: "Black", de: "Schwarz", tr: "Siyah" };
 const emerald: Localized = { en: "Emerald", de: "Smaragd", tr: "Zümrüt" };
@@ -182,11 +176,23 @@ export const products: Product[] = [
     types: ["bottoms"],
     gender: ["men", "women"],
     title: "Ghost Joggers", // working name
-    colour: ghostColour,
-    swatch: "#e9e6df",
-    frames: [{ alt: "Ghost Joggers", tone: "sand" }], // PLACEHOLDER: photos to follow
+    colour: white,
+    swatch: "#f4f2ed",
+    frames: [
+      { src: "/products/ghost-joggers-01.webp", alt: "Ghost Joggers, front", tone: "sand" },
+      { src: "/products/ghost-joggers-02.webp", alt: "Ghost Joggers, back", tone: "sand" },
+      { src: "/products/ghost-joggers-03.webp", alt: "Ghost Joggers, smoke print on the leg", tone: "sand" },
+      { src: "/products/ghost-joggers-04.webp", alt: "Ghost Joggers, cloth tag at the waist", tone: "sand" },
+      { src: "/products/ghost-joggers-05.webp", alt: "Ghost Joggers, open hem with smoke print", tone: "sand" },
+    ],
     sizes: notYet,
-    details: [],
+    details: [
+      { en: "Wide, straight leg with an open hem", de: "Weites, gerades Bein mit offenem Saum", tr: "Geniş, düz paça" },
+      { en: "Elastic waistband, side pockets", de: "Elastischer Bund, seitliche Taschen", tr: "Lastikli bel, yan cepler" },
+      { en: "SOYMONDE wordmark on the front", de: "SOYMONDE Schriftzug vorne", tr: "Önde SOYMONDE yazısı" },
+      { en: "Smoke print on both legs", de: "Rauch-Print auf beiden Beinen", tr: "İki bacakta duman baskı" },
+      { en: "Cloth tag with monogram at the waist", de: "Stofflabel mit Monogramm am Bund", tr: "Belde monogramlı kumaş etiket" },
+    ],
   },
 
   // ── Example pieces ─────────────────────────────────────────────────
