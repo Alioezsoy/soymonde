@@ -63,6 +63,8 @@ async function CollectionView({ params }: { params: Props["params"] }) {
           </div>
         ) : collection.upcoming ? (
           <p className="label relative mt-6 text-bone/60">{t.shop.soon}</p>
+        ) : collection.preorder ? (
+          <p className="label relative mt-6 text-bone/60">{t.shop.preorder}</p>
         ) : null}
       </header>
 
@@ -75,12 +77,12 @@ async function CollectionView({ params }: { params: Props["params"] }) {
       </section>
 
       {/* Before the drop: leave an email to get the link first */}
-      {collection.upcoming ? (
+      {collection.upcoming || collection.preorder ? (
         <section className="mx-auto max-w-md px-5 py-28 text-center md:py-40">
           <p className="label text-stone-deep">{t.drop.early}</p>
           <p className="mt-4 text-lg font-light">{t.drop.earlyText}</p>
           <div className="mt-8 text-left">
-            <Newsletter tone="light" t={t.newsletter} />
+            <Newsletter tone="light" list="early-access" t={t.newsletter} />
           </div>
         </section>
       ) : (

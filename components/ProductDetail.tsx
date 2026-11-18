@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { collections } from "@/content/collections";
 import type { Dictionary } from "@/content/dictionaries";
-import { formatPrice, measureKeys, variantsOf, type Product } from "@/content/products";
+import { canBuy, formatPrice, measureKeys, variantsOf, type Product } from "@/content/products";
 import { href, type Locale } from "@/lib/i18n";
 import { AddToBag } from "./AddToBag";
 import { ChevronIcon } from "./Icons";
@@ -71,11 +71,19 @@ export function ProductDetail({
               {product.title}
             </span>
           </nav>
-          <div className="mt-6 flex min-h-5 gap-1.5">{product.tag ? <Tag>{t.tags[product.tag]}</Tag> : null}</div>
+          <div className="mt-6 flex min-h-5 gap-1.5">
+            {product.preorder ? <Tag>{t.tags.preorder}</Tag> : null}
+            {product.tag ? <Tag>{t.tags[product.tag]}</Tag> : null}
+          </div>
           <h1 lang="en" className="display mt-3 text-xl md:text-2xl">
             {product.title}
           </h1>
           <p className="coord mt-3 text-sm">{product.price === undefined ? t.soon : formatPrice(product.price)}</p>
+          {product.preorder && canBuy(product) ? (
+            <p lang="en" className="mt-4 font-light text-stone-deep">
+              {t.preorderLine}
+            </p>
+          ) : null}
 
           <div className={`mt-8 border-t border-rule pt-5 ${product.upcoming ? "hidden" : ""}`}>
             <p className="label text-stone-deep">
@@ -100,7 +108,14 @@ export function ProductDetail({
           </div>
 
           <div className="mt-7">
-            <AddToBag handle={product.handle} colour={variant.key} sizes={product.sizes} t={t} />
+            <AddToBag
+              handle={product.handle}
+              colour={variant.key}
+              sizes={product.sizes}
+              buyable={canBuy(product)}
+              preorder={!!product.preorder}
+              t={t}
+            />
           </div>
 
           <div className="mt-10 border-t border-rule">

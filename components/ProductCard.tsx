@@ -42,6 +42,7 @@ export function ProductCard({
 
       <div className="flex flex-1 flex-col px-3 pb-4 pt-3 md:px-4 md:pb-5">
         <div className="flex min-h-5 flex-wrap gap-1.5">
+          {product.preorder ? <Tag>{t.tags.preorder}</Tag> : null}
           {product.tag ? <Tag>{t.tags[product.tag]}</Tag> : null}
         </div>
         <p lang="en" className="label mt-2">{product.title}</p>

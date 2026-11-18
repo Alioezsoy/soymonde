@@ -56,6 +56,7 @@ export function CartLines({
               <p className="coord mt-1 text-stone-deep">
                 {variant.colour[lang]} · {t.size} {line.size}
               </p>
+              {product.preorder ? <p className="coord mt-1 text-stone-deep">{t.preorder}</p> : null}
               <div className="mt-auto flex items-center justify-between pt-4">
                 <div className="flex items-center border border-ink/25" role="group" aria-label={t.quantity}>
                   <button

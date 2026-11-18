@@ -45,3 +45,8 @@ Solange der Ordner keine Fotos enthält, zeigt die Seite Platzhalter.
 - **Texte der rechtlichen Seiten:** `content/legal.ts`. Das sind Entwürfe – vor dem Shop-Start prüfen lassen.
 - **Grössentabelle:** in `content/products.ts` beim Piece `measurements` eintragen (Zentimeter, eine Zahl pro Grösse).
 - **Countdown zum Drop:** in `content/collections.ts` bei der Kollektion `dropAt` setzen, z. B. `dropAt: "2027-03-12T18:00:00+01:00"`.
+
+## Pre-order und E-Mail-Anmeldungen
+
+- **Pre-order:** Pieces mit `preorder: true` (in `content/products.ts`) zeigen „Pre-order“ und den Satz „Get yours before it's gone.“ Kaufen geht erst, wenn ein `price` eingetragen ist; ohne Preis steht „Demnächst“ und „Benachrichtige mich“.
+- **E-Mail-Felder** (Newsletter, Early Access, Benachrichtige mich) speichern die Adressen in Shopify als Kunden mit Newsletter-Einwilligung und einem Tag (`newsletter`, `early-access`, `notify-<piece>-<grösse>`). Dafür braucht die Website zwei Einstellungen in Vercel: `SHOPIFY_STORE_DOMAIN` und `SHOPIFY_ADMIN_TOKEN`. Solange sie fehlen, steht „öffnet in Kürze“.

@@ -4,47 +4,52 @@ import { useState } from "react";
 import type { Dictionary } from "@/content/dictionaries";
 import type { Size } from "@/content/products";
 import { addToCart, openCart } from "@/lib/cart";
-
-// Back-in-stock emails are not connected yet. Once a service stores the
-// requests (set up together with Shopify), switch this to true and send the
-// request in `submitNotify` below.
-const NOTIFY_CONNECTED = false;
+import { subscribe, type SignupResult } from "@/lib/subscribe";
 
 /** Size choice and the main button on the product page.
     A size that is not in stock is never labelled "sold out": choosing it
-    turns the button into "Notify me", which asks for an email address. */
+    turns the button into "Notify me", which asks for an email address.
+    A piece without a price ("buyable" false) only offers "Notify me";
+    a pre-order piece says "Pre-order" on the button. */
 export function AddToBag({
   handle,
   colour,
   sizes,
+  buyable = true,
+  preorder = false,
   t,
 }: {
   handle: string;
   /** key of the chosen colour */
   colour: string;
   sizes: Size[];
+  buyable?: boolean;
+  preorder?: boolean;
   t: Dictionary["shop"];
 }) {
   const single = sizes.length === 1;
-  const noneAvailable = sizes.every((s) => !s.available);
+  const noneAvailable = !buyable || sizes.every((s) => !s.available);
   const [size, setSize] = useState<string | null>(single ? sizes[0].label : null);
   const [hint, setHint] = useState(false);
   const [asking, setAsking] = useState(false); // email form open
-  const [sent, setSent] = useState(false);
+  const [sent, setSent] = useState<SignupResult | null>(null);
+  const [busy, setBusy] = useState(false);
 
   const chosen = sizes.find((s) => s.label === size);
-  const notify = chosen ? !chosen.available : noneAvailable;
+  const notify = !buyable || (chosen ? !chosen.available : noneAvailable);
 
   const choose = (label: string) => {
     setSize(label);
     setAsking(false);
-    setSent(false);
+    setSent(null);
   };
 
-  const submitNotify = (e: React.FormEvent) => {
+  const submitNotify = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO when connected: send { handle, size, email } to the back-in-stock service.
-    setSent(true);
+    const email = new FormData(e.currentTarget).get("email");
+    setBusy(true);
+    setSent(await subscribe({ email: String(email ?? ""), list: "notify", handle, size: size ?? undefined }));
+    setBusy(false);
   };
 
   return (
@@ -76,19 +81,22 @@ export function AddToBag({
       </div>
 
       {asking && notify ? (
-        sent ? (
+        sent && sent !== "error" ? (
           <p className="label mt-4 flex min-h-14 items-center border border-ink/25 px-4" role="status">
-            {NOTIFY_CONNECTED ? t.notifyDone : t.notifyPending}
+            {sent === "ok" ? t.notifyDone : t.notifyPending}
           </p>
         ) : (
           <form onSubmit={submitNotify} className="mt-4">
-            <p className="mb-3 text-sm font-light text-stone-deep">{t.notifyText}</p>
+            <p className="mb-3 text-sm font-light text-stone-deep" role={sent === "error" ? "alert" : undefined}>
+              {sent === "error" ? t.notifyError : t.notifyText}
+            </p>
             <div className="flex h-14 border border-ink">
               <label htmlFor={`notify-${handle}`} className="sr-only">
                 {t.email}
               </label>
               <input
                 id={`notify-${handle}`}
+                name="email"
                 type="email"
                 required
                 autoFocus
@@ -97,7 +105,7 @@ export function AddToBag({
                 style={{ outline: "none" }} // the box around the field already shows focus
                 className="min-w-0 flex-1 bg-transparent px-4 text-base placeholder:text-ink/40"
               />
-              <button type="submit" className="label shrink-0 bg-ink px-6 text-bone">
+              <button type="submit" disabled={busy} className="label shrink-0 bg-ink px-6 text-bone disabled:opacity-60">
                 {t.notifySend}
               </button>
             </div>
@@ -116,7 +124,7 @@ export function AddToBag({
             notify ? "border border-ink text-ink" : "bg-ink text-bone"
           }`}
         >
-          {notify ? t.notify : t.add}
+          {notify ? t.notify : preorder ? t.preorder : t.add}
         </button>
       )}
     </div>

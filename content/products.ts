@@ -33,8 +33,10 @@ export type Product = {
   // further colours, if the piece comes in more than one
   otherColours?: Variant[];
   tag?: "new" | "limited";
+  preorder?: boolean; // sold as a pre-order: "Pre-order" button and line
   collection?: CollectionKey; // the drop it belongs to
   upcoming?: boolean; // not released yet: cannot be bought, shows "Notify me"
+  // A piece without a price cannot be bought either: it shows "Coming soon".
   // where the piece is filed in the shop (one or several categories)
   types: ProductType[];
   gender: Gender[]; // both = unisex
@@ -60,8 +62,6 @@ const sizes = (notInStock: string[] = []): Size[] =>
     available: !notInStock.includes(label),
   }));
 
-/** For pieces that are not released yet: every size leads to "Notify me". */
-const notYet: Size[] = sizes(["S", "M", "L", "XL"]);
 
 const white: Localized = { en: "White", de: "Weiss", tr: "Beyaz" };
 
@@ -71,7 +71,7 @@ export const products: Product[] = [
   {
     handle: "ghost-boxy-tee",
     collection: "ghost",
-    upcoming: true,
+    preorder: true,
     types: ["tops"],
     gender: ["men", "women"],
     title: "Ghost Boxy Tee", // working name
@@ -84,7 +84,7 @@ export const products: Product[] = [
       { src: "/products/ghost-boxy-tee-04.webp", alt: "Ghost Boxy Tee, rib collar", tone: "sand" },
       { src: "/products/ghost-boxy-tee-05.webp", alt: "Ghost Boxy Tee, cloth tag at the side seam", tone: "sand" },
     ],
-    sizes: notYet,
+    sizes: sizes(),
     details: [
       { en: "Compact boxy fit, slightly dropped shoulder", de: "Kompakter Boxy Fit, leicht überschnittene Schulter", tr: "Kompakt boxy kesim, hafif düşük omuz" },
       { en: "High rib crew neck", de: "Hoher Rippkragen", tr: "Yüksek ribana yaka" },
@@ -96,7 +96,7 @@ export const products: Product[] = [
   {
     handle: "ghost-oversized-tee",
     collection: "ghost",
-    upcoming: true,
+    preorder: true,
     types: ["tops"],
     gender: ["men", "women"],
     title: "Ghost Oversized Tee", // working name
@@ -109,7 +109,7 @@ export const products: Product[] = [
       { src: "/products/ghost-oversized-tee-04.webp", alt: "Ghost Oversized Tee, rib collar", tone: "sand" },
       { src: "/products/ghost-oversized-tee-05.webp", alt: "Ghost Oversized Tee, cloth tag at the side seam", tone: "sand" },
     ],
-    sizes: notYet,
+    sizes: sizes(),
     details: [
       { en: "Oversized fit, dropped shoulder", de: "Oversized geschnitten, überschnittene Schulter", tr: "Oversize kesim, düşük omuz" },
       { en: "SOYMONDE wordmark on the chest", de: "SOYMONDE Schriftzug auf der Brust", tr: "Göğüste SOYMONDE yazısı" },
@@ -120,7 +120,7 @@ export const products: Product[] = [
   {
     handle: "ghost-longsleeve",
     collection: "ghost",
-    upcoming: true,
+    preorder: true,
     types: ["tops"],
     gender: ["men", "women"],
     title: "Ghost Longsleeve", // working name
@@ -133,7 +133,7 @@ export const products: Product[] = [
       { src: "/products/ghost-longsleeve-04.webp", alt: "Ghost Longsleeve, rib collar", tone: "sand" },
       { src: "/products/ghost-longsleeve-05.webp", alt: "Ghost Longsleeve, cloth tag at the side seam", tone: "sand" },
     ],
-    sizes: notYet,
+    sizes: sizes(),
     details: [
       { en: "Dropped shoulder, long sleeves", de: "Überschnittene Schulter, lange Ärmel", tr: "Düşük omuz, uzun kol" },
       { en: "High rib crew neck", de: "Hoher Rippkragen", tr: "Yüksek ribana yaka" },
@@ -145,7 +145,7 @@ export const products: Product[] = [
   {
     handle: "ghost-zip-jacket",
     collection: "ghost",
-    upcoming: true,
+    preorder: true,
     types: ["sweats", "jackets"],
     gender: ["men", "women"],
     title: "Ghost Zip Jacket", // working name
@@ -158,7 +158,7 @@ export const products: Product[] = [
       { src: "/products/ghost-zip-jacket-04.webp", alt: "Ghost Zip Jacket, leather patch with metal plate", tone: "sand" },
       { src: "/products/ghost-zip-jacket-05.webp", alt: "Ghost Zip Jacket, kangaroo pocket", tone: "sand" },
     ],
-    sizes: notYet,
+    sizes: sizes(),
     details: [
       { en: "Hooded, full zip with monogram puller", de: "Mit Kapuze, durchgehender Reissverschluss mit Monogramm-Zipper", tr: "Kapüşonlu, monogramlı fermuar çekeceği" },
       { en: "Elastic hem and cuffs", de: "Elastischer Saum und Bündchen", tr: "Lastikli etek ve manşetler" },
@@ -170,7 +170,7 @@ export const products: Product[] = [
   {
     handle: "ghost-joggers",
     collection: "ghost",
-    upcoming: true,
+    preorder: true,
     types: ["bottoms"],
     gender: ["men", "women"],
     title: "Ghost Joggers", // working name
@@ -183,7 +183,7 @@ export const products: Product[] = [
       { src: "/products/ghost-joggers-04.webp", alt: "Ghost Joggers, cloth tag at the waist", tone: "sand" },
       { src: "/products/ghost-joggers-05.webp", alt: "Ghost Joggers, open hem with smoke print", tone: "sand" },
     ],
-    sizes: notYet,
+    sizes: sizes(),
     details: [
       { en: "Wide, straight leg with an open hem", de: "Weites, gerades Bein mit offenem Saum", tr: "Geniş, düz paça" },
       { en: "Elastic waistband, side pockets", de: "Elastischer Bund, seitliche Taschen", tr: "Lastikli bel, yan cepler" },
@@ -198,6 +198,9 @@ export const products: Product[] = [
 export const activeCategories = categories.filter((c) =>
   c.key === "basics" ? products.some((p) => p.basic) : products.some((p) => p.types.includes(c.key)),
 );
+
+/** Whether the piece can be put in the bag (it needs a price). */
+export const canBuy = (p: Product) => p.price !== undefined && !p.upcoming;
 
 export function getProduct(handle: string) {
   return products.find((p) => p.handle === handle);
