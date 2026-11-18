@@ -30,34 +30,45 @@ export default async function Home() {
           countLabel={<span lang="en">{collection.title}</span>}
           viewLabel={t.shop.view}
           action={
-            <Link href={href(lang, `/collection/${collection.slug}`)} className="label link-line">
+            <Link
+              href={href(lang, `/collection/${collection.slug}`)}
+              className="label link-line"
+            >
               {t.home.discover}
             </Link>
           }
         >
           {drop.map((p, i) => (
-            <ProductCard key={p.handle} product={p} lang={lang} t={t.shop} priority={i < 4} />
+            <ProductCard
+              key={p.handle}
+              product={p}
+              lang={lang}
+              t={t.shop}
+              priority={i < 4}
+            />
           ))}
         </ProductGrid>
       </section>
 
-      {/* Everything else */}
-      <section className="px-5 pt-20 md:px-10 md:pt-32">
-        <ProductGrid
-          count={others.length}
-          countLabel={t.home.pieces}
-          viewLabel={t.shop.view}
-          action={
-            <Link href={href(lang, "/shop")} className="label link-line">
-              {t.home.viewAll}
-            </Link>
-          }
-        >
-          {others.slice(0, FEATURED).map((p) => (
-            <ProductCard key={p.handle} product={p} lang={lang} t={t.shop} />
-          ))}
-        </ProductGrid>
-      </section>
+      {/* Everything else (only when there are pieces outside the drop) */}
+      {others.length ? (
+        <section className="px-5 pt-20 md:px-10 md:pt-32">
+          <ProductGrid
+            count={others.length}
+            countLabel={t.home.pieces}
+            viewLabel={t.shop.view}
+            action={
+              <Link href={href(lang, "/shop")} className="label link-line">
+                {t.home.viewAll}
+              </Link>
+            }
+          >
+            {others.slice(0, FEATURED).map((p) => (
+              <ProductCard key={p.handle} product={p} lang={lang} t={t.shop} />
+            ))}
+          </ProductGrid>
+        </section>
+      ) : null}
 
       {/* A look into the archive */}
       <section className="overflow-hidden px-5 py-28 md:px-10 md:py-48">
@@ -74,7 +85,11 @@ export default async function Home() {
             className="rail group -mx-5 flex items-end gap-3 overflow-x-auto px-5 md:-mx-10 md:gap-5 md:px-10"
           >
             {archive.map((entry, i) => (
-              <div key={i} className="h-[52svh] shrink-0 md:h-[68svh]" style={{ aspectRatio: `${entry.width} / ${entry.height}` }}>
+              <div
+                key={i}
+                className="h-[52svh] shrink-0 md:h-[68svh]"
+                style={{ aspectRatio: `${entry.width} / ${entry.height}` }}
+              >
                 {entry.src ? (
                   <Image
                     src={entry.src}

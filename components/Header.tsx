@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
-import { categories, genders, shopQuery } from "@/content/categories";
+import { genders, shopQuery } from "@/content/categories";
+import { activeCategories } from "@/content/products";
 import { collections } from "@/content/collections";
 import type { Dictionary } from "@/content/dictionaries";
 import { openCart, useCart } from "@/lib/cart";
@@ -165,7 +166,7 @@ export function Header({
                 {/* the shop's categories, right under "Shop" */}
                 {i === 0 ? (
                   <ul lang="en" className="mb-2 mt-4 grid grid-cols-2 gap-x-6 gap-y-3 md:max-w-md">
-                    {[...genders, ...categories].map((entry) => (
+                    {[...genders, ...activeCategories].map((entry) => (
                       <li key={entry.key}>
                         <Link
                           href={`${item.href}${

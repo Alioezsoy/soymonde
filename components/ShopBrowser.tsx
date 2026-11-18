@@ -13,6 +13,7 @@ import {
   type ProductType,
 } from "@/content/categories";
 import type { Dictionary } from "@/content/dictionaries";
+import { activeCategories } from "@/content/products";
 import { ProductGrid } from "./ProductGrid";
 
 export type ShopItem = {
@@ -76,7 +77,7 @@ export function ShopBrowser({ items, t }: { items: ShopItem[]; t: Dictionary["sh
           ))}
         </div>
         <div className="rail -mx-5 flex gap-2 overflow-x-auto px-5 md:mx-0 md:flex-wrap md:px-0">
-          {categories.map((x) => (
+          {activeCategories.map((x) => (
             <span key={x.key} className="contents">
               {chip(x.label, category === x.key, () => set(gender, category === x.key ? null : x.key))}
             </span>
