@@ -108,11 +108,22 @@ export const products: Product[] = [
     types: ["tops"],
     gender: ["men", "women"],
     title: "Ghost Oversized Tee", // working name
-    colour: ghostColour,
-    swatch: "#e9e6df",
-    frames: [{ alt: "Ghost Oversized Tee", tone: "sand" }], // PLACEHOLDER: photos to follow
+    colour: white,
+    swatch: "#f4f2ed",
+    frames: [
+      { src: "/products/ghost-oversized-tee-01.webp", alt: "Ghost Oversized Tee, front", tone: "sand" },
+      { src: "/products/ghost-oversized-tee-02.webp", alt: "Ghost Oversized Tee, back with stitched circle", tone: "sand" },
+      { src: "/products/ghost-oversized-tee-03.webp", alt: "Ghost Oversized Tee, circle detail", tone: "sand" },
+      { src: "/products/ghost-oversized-tee-04.webp", alt: "Ghost Oversized Tee, rib collar", tone: "sand" },
+      { src: "/products/ghost-oversized-tee-05.webp", alt: "Ghost Oversized Tee, cloth tag at the side seam", tone: "sand" },
+    ],
     sizes: notYet,
-    details: [],
+    details: [
+      { en: "Oversized fit, dropped shoulder", de: "Oversized geschnitten, überschnittene Schulter", tr: "Oversize kesim, düşük omuz" },
+      { en: "SOYMONDE wordmark on the chest", de: "SOYMONDE Schriftzug auf der Brust", tr: "Göğüste SOYMONDE yazısı" },
+      { en: "Tonal circle on the back, built from stitched segments", de: "Ton-in-Ton Kreis auf dem Rücken aus aufgenähten Segmenten", tr: "Sırtta dikili parçalardan ton sür ton daire" },
+      { en: "Cloth tag with monogram at the side seam", de: "Stofflabel mit Monogramm an der Seitennaht", tr: "Yan dikişte monogramlı kumaş etiket" },
+    ],
   },
   {
     handle: "ghost-longsleeve",
@@ -146,11 +157,23 @@ export const products: Product[] = [
     types: ["sweats", "jackets"],
     gender: ["men", "women"],
     title: "Ghost Zip Jacket", // working name
-    colour: ghostColour,
-    swatch: "#e9e6df",
-    frames: [{ alt: "Ghost Zip Jacket", tone: "sand" }], // PLACEHOLDER: photos to follow
+    colour: white,
+    swatch: "#f4f2ed",
+    frames: [
+      { src: "/products/ghost-zip-jacket-01.webp", alt: "Ghost Zip Jacket, front", tone: "sand" },
+      { src: "/products/ghost-zip-jacket-02.webp", alt: "Ghost Zip Jacket, back with leather patch", tone: "sand" },
+      { src: "/products/ghost-zip-jacket-03.webp", alt: "Ghost Zip Jacket, zip with monogram puller", tone: "sand" },
+      { src: "/products/ghost-zip-jacket-04.webp", alt: "Ghost Zip Jacket, leather patch with metal plate", tone: "sand" },
+      { src: "/products/ghost-zip-jacket-05.webp", alt: "Ghost Zip Jacket, kangaroo pocket", tone: "sand" },
+    ],
     sizes: notYet,
-    details: [],
+    details: [
+      { en: "Hooded, full zip with monogram puller", de: "Mit Kapuze, durchgehender Reissverschluss mit Monogramm-Zipper", tr: "Kapüşonlu, monogramlı fermuar çekeceği" },
+      { en: "Elastic hem and cuffs", de: "Elastischer Saum und Bündchen", tr: "Lastikli etek ve manşetler" },
+      { en: "SOYMONDE wordmark on the chest", de: "SOYMONDE Schriftzug auf der Brust", tr: "Göğüste SOYMONDE yazısı" },
+      { en: "Leather patch with metal monogram plate on the back", de: "Lederpatch mit Metallplakette und Monogramm auf dem Rücken", tr: "Sırtta metal monogram plakalı deri arma" },
+      { en: "Kangaroo pocket", de: "Kängurutasche", tr: "Kanguru cep" },
+    ],
   },
   {
     handle: "ghost-joggers",
