@@ -75,6 +75,7 @@ export const products: Product[] = [
     types: ["tops"],
     gender: ["men", "women"],
     title: "Ghost Boxy Tee", // working name
+    price: 55,
     colour: white,
     swatch: "#f4f2ed",
     frames: [
@@ -100,6 +101,7 @@ export const products: Product[] = [
     types: ["tops"],
     gender: ["men", "women"],
     title: "Ghost Oversized Tee", // working name
+    price: 49,
     colour: white,
     swatch: "#f4f2ed",
     frames: [
@@ -124,6 +126,7 @@ export const products: Product[] = [
     types: ["tops"],
     gender: ["men", "women"],
     title: "Ghost Longsleeve", // working name
+    price: 59,
     colour: white,
     swatch: "#f4f2ed",
     frames: [
@@ -149,6 +152,7 @@ export const products: Product[] = [
     types: ["sweats", "jackets"],
     gender: ["men", "women"],
     title: "Ghost Zip Jacket", // working name
+    price: 94,
     colour: white,
     swatch: "#f4f2ed",
     frames: [
@@ -174,6 +178,7 @@ export const products: Product[] = [
     types: ["bottoms"],
     gender: ["men", "women"],
     title: "Ghost Joggers", // working name
+    price: 79,
     colour: white,
     swatch: "#f4f2ed",
     frames: [
