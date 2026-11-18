@@ -49,4 +49,4 @@ Solange der Ordner keine Fotos enthält, zeigt die Seite Platzhalter.
 ## Pre-order und E-Mail-Anmeldungen
 
 - **Pre-order:** Pieces mit `preorder: true` (in `content/products.ts`) zeigen „Pre-order“ und den Satz „Get yours before it's gone.“ Kaufen geht erst, wenn ein `price` eingetragen ist; ohne Preis steht „Demnächst“ und „Benachrichtige mich“.
-- **E-Mail-Felder** (Newsletter, Early Access, Benachrichtige mich) speichern die Adressen in Shopify als Kunden mit Newsletter-Einwilligung und einem Tag (`newsletter`, `early-access`, `notify-<piece>-<grösse>`). Dafür braucht die Website zwei Einstellungen in Vercel: `SHOPIFY_STORE_DOMAIN` und `SHOPIFY_ADMIN_TOKEN`. Solange sie fehlen, steht „öffnet in Kürze“.
+- **E-Mail-Felder** (Newsletter, Early Access, Benachrichtige mich) speichern die Adressen in Shopify als Kunden mit Newsletter-Einwilligung und einem Tag (`newsletter`, `early-access`, `notify-<piece>-<grösse>`). Dafür braucht die Website drei Einstellungen in Vercel: `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_CLIENT_ID` und `SHOPIFY_CLIENT_SECRET` (aus der App im Shopify Dev Dashboard). Solange sie fehlen, steht „öffnet in Kürze“.

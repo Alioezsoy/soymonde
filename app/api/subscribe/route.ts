@@ -1,39 +1,13 @@
 // Stores email sign-ups (newsletter, early access, "Notify me") as customers
 // in Shopify, marked as subscribed to email marketing and tagged by list.
-//
-// Needs two settings (environment variables, set in Vercel; never in code):
-//   SHOPIFY_STORE_DOMAIN   e.g. "soymonde.myshopify.com"
-//   SHOPIFY_ADMIN_TOKEN    Admin API token of a custom app with the
-//                          scopes read_customers and write_customers
-// Without them the endpoint answers 503 and the site says "opens soon".
+// Without the Shopify settings (see lib/shopify-admin.ts) it answers 503
+// and the site says "opens soon".
+import { admin as shopify, adminConfigured } from "@/lib/shopify-admin";
 
-const API_VERSION = "2025-10";
 const LISTS = ["newsletter", "early-access", "notify"] as const;
 type List = (typeof LISTS)[number];
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-type Gql<T> = { data?: T; errors?: { message: string }[] };
-
-async function shopify<T>(query: string, variables: Record<string, unknown>): Promise<T> {
-  const res = await fetch(
-    `https://${process.env.SHOPIFY_STORE_DOMAIN}/admin/api/${API_VERSION}/graphql.json`,
-    {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-shopify-access-token": process.env.SHOPIFY_ADMIN_TOKEN ?? "",
-      },
-      body: JSON.stringify({ query, variables }),
-      cache: "no-store",
-    },
-  );
-  const json = (await res.json()) as Gql<T>;
-  if (!res.ok || json.errors?.length || !json.data) {
-    throw new Error(json.errors?.map((e) => e.message).join("; ") || `Shopify ${res.status}`);
-  }
-  return json.data;
-}
 
 const consent = { marketingState: "SUBSCRIBED", marketingOptInLevel: "SINGLE_OPT_IN" };
 
@@ -83,7 +57,7 @@ export async function POST(request: Request) {
     return Response.json({ error: "invalid" }, { status: 400 });
   }
 
-  if (!process.env.SHOPIFY_STORE_DOMAIN || !process.env.SHOPIFY_ADMIN_TOKEN) {
+  if (!adminConfigured()) {
     return Response.json({ error: "not connected" }, { status: 503 });
   }
 
