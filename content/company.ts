@@ -7,7 +7,7 @@ export const company = {
   street: "Risegg 1",
   city: "9422 Staad SG",
   country: { en: "Switzerland", de: "Schweiz", tr: "İsviçre" },
-  email: "", // PLACEHOLDER: contact address for customers, e.g. hello@soymonde.com
+  email: "contact@soymonde.com",
   // Withdrawal period in days, counted from delivery (the same for every country).
   returnDays: 14,
   // Pre-orders ship about this long after the order, once production is done.
