@@ -1,5 +1,4 @@
 // Questions and answers for the FAQ page, in all three languages.
-// PLACEHOLDER: adjust once shipping, payment and returns are fixed.
 import type { Localized } from "@/lib/i18n";
 import { company } from "./company";
 
@@ -11,9 +10,9 @@ export const faq: { q: Localized; a: Localized }[] = [
       tr: "Ghost Collection ne zaman çıkıyor?",
     },
     a: {
-      en: "The date will be announced on the collection page. Sign up for early access there to get the link before the drop opens.",
-      de: "Das Datum wird auf der Seite der Kollektion bekannt gegeben. Trag dich dort für Early Access ein und erhalte den Link, bevor der Drop öffnet.",
-      tr: "Tarih koleksiyon sayfasında duyurulacak. Orada early access için kaydol ve drop açılmadan önce bağlantıyı al.",
+      en: "The Ghost Collection is open for pre-order now. Your pieces ship once production is finished, about one month after your order.",
+      de: "Die Ghost Collection kannst du jetzt vorbestellen. Deine Pieces werden verschickt, sobald die Produktion abgeschlossen ist, rund einen Monat nach deiner Bestellung.",
+      tr: "Ghost Collection şu anda PRE-ORDER ile satışta. Parçaların, üretim tamamlandığında, siparişinden yaklaşık bir ay sonra gönderilir.",
     },
   },
   {
@@ -47,9 +46,9 @@ export const faq: { q: Localized; a: Localized }[] = [
       tr: "Nereden gönderiyorsunuz ve ne kadar sürüyor?",
     },
     a: {
-      en: "We ship from Switzerland. Shipping costs and delivery time are shown at checkout before you pay.",
-      de: "Wir versenden aus der Schweiz. Versandkosten und Lieferzeit siehst du im Checkout, bevor du bezahlst.",
-      tr: "İsviçre'den gönderiyoruz. Kargo ücreti ve teslimat süresi, ödeme yapmadan önce ödeme adımında gösterilir.",
+      en: `We ship from Switzerland to Switzerland, the EU and Türkiye. Pre-orders ship ${company.preorderShipping.en} after your order, once production is finished. Shipping costs are shown at checkout.`,
+      de: `Wir versenden aus der Schweiz in die Schweiz, die EU und die Türkei. Pre-orders werden ${company.preorderShipping.de} nach deiner Bestellung verschickt, sobald die Produktion abgeschlossen ist. Die Versandkosten siehst du im Checkout.`,
+      tr: `İsviçre'den İsviçre'ye, AB'ye ve Türkiye'ye gönderiyoruz. PRE-ORDER siparişleri, üretim tamamlandıktan sonra, siparişinden ${company.preorderShipping.tr} sonra gönderilir. Kargo ücreti ödeme adımında gösterilir.`,
     },
   },
   {
@@ -59,9 +58,21 @@ export const faq: { q: Localized; a: Localized }[] = [
       tr: "Bir parçayı iade edebilir miyim?",
     },
     a: {
-      en: `Yes, within ${company.returnDays} days of delivery, unworn and in its original condition. The steps are on the Shipping & returns page.`,
-      de: `Ja, innerhalb von ${company.returnDays} Tagen nach Erhalt, ungetragen und im Originalzustand. Die Schritte stehen auf der Seite Versand & Rückgabe.`,
-      tr: `Evet, teslimattan sonraki ${company.returnDays} gün içinde, giyilmemiş ve ilk günkü durumunda. Adımlar Kargo & iade sayfasında yazıyor.`,
+      en: `Yes. You can withdraw within ${company.returnDays} days of delivery, or at any time before your order ships, without giving reasons. You pay the return shipping; we refund the price and standard delivery costs. The steps are on the Shipping & returns page.`,
+      de: `Ja. Du kannst innerhalb von ${company.returnDays} Tagen nach Erhalt widerrufen, oder jederzeit, bevor deine Bestellung verschickt wird, ohne Angabe von Gründen. Die Rücksendung bezahlst du, wir erstatten den Preis und die Standard-Versandkosten. Die Schritte stehen auf der Seite Versand & Rückgabe.`,
+      tr: `Evet. Teslimattan sonraki ${company.returnDays} gün içinde veya siparişin gönderilmeden önce istediğin zaman, gerekçe göstermeden cayabilirsin. İade kargo ücreti sana aittir; ürün bedelini ve standart kargo ücretini iade ederiz. Adımlar Kargo & iade sayfasında yazıyor.`,
+    },
+  },
+  {
+    q: {
+      en: "Do I pay customs?",
+      de: "Muss ich Zoll bezahlen?",
+      tr: "Gümrük ödeyecek miyim?",
+    },
+    a: {
+      en: "Within Switzerland, no. For the EU and Türkiye, customs duties and import taxes may apply in your country and are paid on delivery. Since February 2026, Türkiye charges them on every parcel from abroad.",
+      de: "Innerhalb der Schweiz nicht. In der EU und in der Türkei können Zölle und Einfuhrsteuern anfallen, die bei der Zustellung bezahlt werden. Die Türkei erhebt sie seit Februar 2026 auf jedes Paket aus dem Ausland.",
+      tr: "İsviçre içinde hayır. AB'de ve Türkiye'de gümrük vergisi ve ithalat vergileri doğabilir; bunlar teslimatta ödenir. Türkiye, Şubat 2026'dan beri yurt dışından gelen her pakete bunları uygulamaktadır.",
     },
   },
   {

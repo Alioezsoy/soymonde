@@ -117,6 +117,9 @@ export function ProductDetail({
               preorder={!!product.preorder}
               t={t}
             />
+            {product.preorder && canBuy(product) ? (
+              <p className="mt-3 text-sm font-light text-stone-deep">{t.preorderShip}</p>
+            ) : null}
           </div>
 
           <div className="mt-10 border-t border-rule">
