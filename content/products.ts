@@ -64,6 +64,20 @@ const sizes = (notInStock: string[] = []): Size[] =>
 
 
 const white: Localized = { en: "White", de: "Weiss", tr: "Beyaz" };
+const bone: Localized = { en: "Bone", de: "Bone", tr: "BONE" };
+const black: Localized = { en: "Black", de: "Schwarz", tr: "Siyah" };
+
+/** A further colour of a piece, with front and back photos
+    in /public/products/<handle>-<key>-01.webp and -02.webp. */
+const colourway = (handle: string, title: string, key: "bone" | "black"): Variant => ({
+  key,
+  colour: key === "bone" ? bone : black,
+  swatch: key === "bone" ? "#e6dfcf" : "#111110",
+  frames: [
+    { src: `/products/${handle}-${key}-01.webp`, alt: `${title} in ${key}, front`, tone: "sand" },
+    { src: `/products/${handle}-${key}-02.webp`, alt: `${title} in ${key}, back`, tone: "sand" },
+  ],
+});
 
 export const products: Product[] = [
   // ── Ghost Collection: the first drop. Not released yet. ──────────────
@@ -85,6 +99,7 @@ export const products: Product[] = [
       { src: "/products/ghost-boxy-tee-04.webp", alt: "Ghost Boxy Tee, rib collar", tone: "sand" },
       { src: "/products/ghost-boxy-tee-05.webp", alt: "Ghost Boxy Tee, cloth tag at the side seam", tone: "sand" },
     ],
+    otherColours: [colourway("ghost-boxy-tee", "Ghost Boxy Tee", "bone"), colourway("ghost-boxy-tee", "Ghost Boxy Tee", "black")],
     sizes: sizes(),
     details: [
       { en: "Compact boxy fit, slightly dropped shoulder", de: "Kompakter Boxy Fit, leicht überschnittene Schulter", tr: "Kompakt boxy kesim, hafif düşük omuz" },
@@ -111,6 +126,7 @@ export const products: Product[] = [
       { src: "/products/ghost-oversized-tee-04.webp", alt: "Ghost Oversized Tee, rib collar", tone: "sand" },
       { src: "/products/ghost-oversized-tee-05.webp", alt: "Ghost Oversized Tee, cloth tag at the side seam", tone: "sand" },
     ],
+    otherColours: [colourway("ghost-oversized-tee", "Ghost Oversized Tee", "bone"), colourway("ghost-oversized-tee", "Ghost Oversized Tee", "black")],
     sizes: sizes(),
     details: [
       { en: "Oversized fit, dropped shoulder", de: "Oversized geschnitten, überschnittene Schulter", tr: "Oversize kesim, düşük omuz" },
@@ -162,6 +178,7 @@ export const products: Product[] = [
       { src: "/products/ghost-zip-jacket-04.webp", alt: "Ghost Zip Jacket, leather patch with metal plate", tone: "sand" },
       { src: "/products/ghost-zip-jacket-05.webp", alt: "Ghost Zip Jacket, kangaroo pocket", tone: "sand" },
     ],
+    otherColours: [colourway("ghost-zip-jacket", "Ghost Zip Jacket", "black")],
     sizes: sizes(),
     details: [
       { en: "Hooded, full zip with monogram puller", de: "Mit Kapuze, durchgehender Reissverschluss mit Monogramm-Zipper", tr: "Kapüşonlu, monogramlı fermuar çekeceği" },
@@ -188,6 +205,7 @@ export const products: Product[] = [
       { src: "/products/ghost-joggers-04.webp", alt: "Ghost Joggers, cloth tag at the waist", tone: "sand" },
       { src: "/products/ghost-joggers-05.webp", alt: "Ghost Joggers, open hem with smoke print", tone: "sand" },
     ],
+    otherColours: [colourway("ghost-joggers", "Ghost Joggers", "black")],
     sizes: sizes(),
     details: [
       { en: "Wide, straight leg with an open hem", de: "Weites, gerades Bein mit offenem Saum", tr: "Geniş, düz paça" },
