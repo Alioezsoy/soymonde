@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import type { Dictionary } from "@/content/dictionaries";
 import { formatPrice, getProduct, getVariant } from "@/content/products";
 import { setQuantity, useCart } from "@/lib/cart";
@@ -22,6 +23,31 @@ export function CartLines({
       const product = getProduct(line.handle);
       return product ? [{ line, product, variant: getVariant(product, line.colour) }] : [];
     });
+  const [busy, setBusy] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  // Hands the bag to Shopify and opens its checkout.
+  const checkout = async () => {
+    setBusy(true);
+    setFailed(false);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          lang,
+          lines: lines.map(({ line }) => ({ handle: line.handle, size: line.size, quantity: line.quantity })),
+        }),
+      });
+      const json = (await res.json()) as { url?: string };
+      if (!res.ok || !json.url) throw new Error("checkout");
+      window.location.assign(json.url);
+    } catch {
+      setFailed(true);
+      setBusy(false);
+    }
+  };
+
   const subtotal = lines.reduce((sum, { line, product }) => sum + (product.price ?? 0) * line.quantity, 0);
 
   if (lines.length === 0) {
@@ -96,10 +122,19 @@ export function CartLines({
           <span className="coord text-sm">{formatPrice(subtotal)}</span>
         </div>
         <p className="mt-2 text-sm font-light text-stone-deep">{t.note}</p>
-        {/* Checkout is switched on when Shopify is connected. */}
-        <button type="button" disabled className="label mt-5 h-14 w-full bg-ink/15 text-ink/60">
-          {t.checkoutSoon}
+        <button
+          type="button"
+          onClick={checkout}
+          disabled={busy}
+          className="label mt-5 h-14 w-full bg-ink text-bone transition-opacity duration-500 hover:opacity-85 disabled:opacity-60"
+        >
+          {busy ? t.checkoutBusy : t.checkout}
         </button>
+        {failed ? (
+          <p className="mt-3 text-sm font-light" role="alert">
+            {t.checkoutError}
+          </p>
+        ) : null}
       </div>
     </>
   );

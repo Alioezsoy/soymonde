@@ -13,7 +13,12 @@ import "server-only";
 export const ADMIN_API_VERSION = "2025-10";
 
 export const adminConfigured = () =>
-  Boolean(process.env.SHOPIFY_STORE_DOMAIN && process.env.SHOPIFY_CLIENT_ID && process.env.SHOPIFY_CLIENT_SECRET);
+  Boolean(
+    process.env.SHOPIFY_STORE_DOMAIN &&
+      ((process.env.SHOPIFY_CLIENT_ID && process.env.SHOPIFY_CLIENT_SECRET) ||
+        // the app credentials are added to the request by a proxy (cloud work sessions)
+        process.env.SHOPIFY_AUTH_VIA_PROXY === "1"),
+  );
 
 let cached: { token: string; until: number } | null = null;
 
@@ -24,8 +29,9 @@ async function token(): Promise<string> {
     headers: { "content-type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
       grant_type: "client_credentials",
-      client_id: process.env.SHOPIFY_CLIENT_ID ?? "",
-      client_secret: process.env.SHOPIFY_CLIENT_SECRET ?? "",
+      ...(process.env.SHOPIFY_CLIENT_ID
+        ? { client_id: process.env.SHOPIFY_CLIENT_ID, client_secret: process.env.SHOPIFY_CLIENT_SECRET ?? "" }
+        : {}),
     }),
     cache: "no-store",
   });
