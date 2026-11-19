@@ -1,5 +1,5 @@
 // The legal pages, in all three languages.
-// DRAFTS: have these texts checked before the shop opens.
+// Have changes to these texts checked by a lawyer.
 import type { Locale } from "@/lib/i18n";
 import { company } from "./company";
 

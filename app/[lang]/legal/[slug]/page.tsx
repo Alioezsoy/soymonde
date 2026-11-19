@@ -36,8 +36,7 @@ async function LegalView({ params }: { params: Props["params"] }) {
     <>
       <PageIntro label={t.legal.label} title={t.legal[slug]} />
       <div className="px-5 pb-32 md:px-10 md:pb-48">
-        <p className="coord max-w-2xl border-y border-rule py-4 text-stone-deep">{t.legal.draft}</p>
-        <div className="mt-12 max-w-2xl space-y-12">
+        <div className="max-w-2xl space-y-12 border-t border-rule pt-12">
           {sections.map((section) => (
             <section key={section.heading}>
               <h2 className="label text-stone-deep">{section.heading}</h2>
