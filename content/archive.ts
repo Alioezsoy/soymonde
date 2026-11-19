@@ -76,7 +76,10 @@ function readPhotos(): ArchiveEntry[] {
     });
 }
 
-export function getArchive(): ArchiveEntry[] {
+/** The archive photos. Read once when the site is built ("use cache"),
+    so reading the files does not happen on every visit. */
+export async function getArchive(): Promise<ArchiveEntry[]> {
+  "use cache";
   const photos = readPhotos();
   return photos.length > 0 ? photos : placeholders;
 }

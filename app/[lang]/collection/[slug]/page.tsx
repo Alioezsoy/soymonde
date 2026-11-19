@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { Countdown } from "@/components/Countdown";
@@ -52,7 +53,22 @@ async function CollectionView({ params }: { params: Props["params"] }) {
         data-header-dark
         className="relative flex h-[70svh] min-h-[26rem] flex-col items-center justify-center overflow-hidden bg-ink px-5 text-center text-bone"
       >
-        <Monogram tone="white" className="absolute w-[min(70vw,30rem)] opacity-[0.06]" />
+        {collection.hero ? (
+          <>
+            <Image
+              src={collection.hero}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover opacity-55 grayscale-[35%]"
+            />
+            {/* darkens the photo so the title stays readable */}
+            <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/35 to-ink/80" />
+          </>
+        ) : (
+          <Monogram tone="white" className="absolute w-[min(70vw,30rem)] opacity-[0.06]" />
+        )}
         <h1 lang="en" className="display relative text-3xl md:text-6xl">
           {collection.title}
         </h1>

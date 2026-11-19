@@ -18,7 +18,7 @@ export default async function Home() {
   const collection = collections[0];
   const drop = inCollection(collection.key);
   const others = products.filter((p) => p.collection !== collection.key);
-  const archive = getArchive().slice(0, 6);
+  const archive = (await getArchive()).slice(0, 6);
 
   return (
     <>

@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
 // A journey in pictures: process, sketches, the studio. No text needed.
 export default async function ArchivePage() {
   const { t } = await getTexts();
-  const entries = getArchive();
+  const entries = await getArchive();
   return (
     <>
       <PageIntro label={String(entries.length).padStart(2, "0")} title={t.archive.label} />

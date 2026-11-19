@@ -12,6 +12,8 @@ type Collection = {
       While it is set and in the future, the collection page counts down to it.
       Leave it out while the date is not fixed. */
   dropAt?: string;
+  /** a mood photo behind the title on the collection page (in /public) */
+  hero?: string;
 };
 
 export const collections = [
@@ -20,6 +22,7 @@ export const collections = [
     slug: "ghost",
     title: "Ghost Collection",
     upcoming: false,
+    hero: "/collections/ghost-hero.jpg",
     preorder: true, // pieces show "Pre-order"; without a price they show "Coming soon"
   },
 ] as const satisfies readonly Collection[];
