@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { Dictionary } from "@/content/dictionaries";
-import { formatPrice, getProduct, getVariant } from "@/content/products";
+import { getProduct, getVariant } from "@/content/products";
+import { formatMoney, useMarket } from "@/lib/market";
 import { setQuantity, useCart } from "@/lib/cart";
 import { href, type Locale } from "@/lib/i18n";
 import { Plate } from "./Plate";
@@ -48,7 +49,11 @@ export function CartLines({
     }
   };
 
-  const subtotal = lines.reduce((sum, { line, product }) => sum + (product.price ?? 0) * line.quantity, 0);
+  const market = useMarket();
+  // prices in the visitor's currency once known; CHF until then
+  const priceOf = (handle: string, chf: number | undefined) => market?.prices[handle] ?? chf ?? 0;
+  const currency = market?.currency ?? "CHF";
+  const subtotal = lines.reduce((sum, { line, product }) => sum + priceOf(product.handle, product.price) * line.quantity, 0);
 
   if (lines.length === 0) {
     return (
@@ -77,7 +82,7 @@ export function CartLines({
             <div className="flex min-w-0 flex-1 flex-col">
               <div className="flex items-start justify-between gap-3">
                 <p className="text-sm md:text-base">{product.title}</p>
-                <p className="coord shrink-0 pt-1">{formatPrice((product.price ?? 0) * line.quantity)}</p>
+                <p className="coord shrink-0 pt-1">{formatMoney(priceOf(product.handle, product.price) * line.quantity, currency, lang)}</p>
               </div>
               <p className="coord mt-1 text-stone-deep">
                 {variant.colour[lang]} · {t.size} {line.size}
@@ -119,7 +124,7 @@ export function CartLines({
       <div className="border-t border-ink/25 pt-5">
         <div className="flex items-baseline justify-between">
           <span className="label">{t.subtotal}</span>
-          <span className="coord text-sm">{formatPrice(subtotal)}</span>
+          <span className="coord text-sm">{formatMoney(subtotal, currency, lang)}</span>
         </div>
         <p className="mt-2 text-sm font-light text-stone-deep">{t.note}</p>
         <button

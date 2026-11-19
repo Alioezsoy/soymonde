@@ -1,8 +1,9 @@
 import Link from "next/link";
 import type { Dictionary } from "@/content/dictionaries";
-import { formatPrice, variantsOf, type Product } from "@/content/products";
+import { variantsOf, type Product } from "@/content/products";
 import { href, type Locale } from "@/lib/i18n";
 import { Plate } from "./Plate";
+import { Price } from "./Price";
 
 /** A small boxed label: New, Limited. */
 export function Tag({ children }: { children: React.ReactNode }) {
@@ -47,7 +48,7 @@ export function ProductCard({
         </div>
         <p lang="en" className="label mt-2">{product.title}</p>
         <p className="coord mt-1.5 text-stone-deep">
-          {product.price === undefined ? t.soon : formatPrice(product.price)}
+          <Price handle={product.handle} chf={product.price} lang={lang} fallback={t.soon} />
         </p>
         <span className="mt-3 flex min-h-3 gap-1.5">
           {(product.upcoming ? [] : variantsOf(product)).map((v) => (

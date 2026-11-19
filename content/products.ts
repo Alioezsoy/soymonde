@@ -214,5 +214,3 @@ export function getProduct(handle: string) {
 export const inCollection = (key: CollectionKey) =>
   products.filter((p) => p.collection === key);
 
-export const formatPrice = (amount: number) =>
-  `CHF ${amount.toFixed(2).replace(/\.00$/, "")}`;

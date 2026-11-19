@@ -4,11 +4,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { collections } from "@/content/collections";
 import type { Dictionary } from "@/content/dictionaries";
-import { canBuy, formatPrice, measureKeys, variantsOf, type Product } from "@/content/products";
+import { canBuy, measureKeys, variantsOf, type Product } from "@/content/products";
 import { href, type Locale } from "@/lib/i18n";
 import { AddToBag } from "./AddToBag";
 import { ChevronIcon } from "./Icons";
 import { Plate } from "./Plate";
+import { Price } from "./Price";
 import { Tag } from "./ProductCard";
 
 /** The product page: photos on one side, everything needed to buy on the other.
@@ -78,7 +79,7 @@ export function ProductDetail({
           <h1 lang="en" className="display mt-3 text-xl md:text-2xl">
             {product.title}
           </h1>
-          <p className="coord mt-3 text-sm">{product.price === undefined ? t.soon : formatPrice(product.price)}</p>
+          <p className="coord mt-3 text-sm"><Price handle={product.handle} chf={product.price} lang={lang} fallback={t.soon} /></p>
           {product.preorder && canBuy(product) ? (
             <p lang="en" className="mt-4 font-light text-stone-deep">
               {t.preorderLine}

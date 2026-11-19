@@ -54,3 +54,7 @@ Solange der Ordner keine Fotos enthält, zeigt die Seite Platzhalter.
 ## Checkout
 
 „Zur Kasse“ legt über die Storefront-API (Headless-App in Shopify) einen Warenkorb an und leitet zum Shopify-Checkout weiter. Shop-Adresse und öffentlicher Storefront-Token stehen in `lib/shopify-storefront.ts`. Solange der Shop in Shopify mit einem Passwort gesperrt ist, landet der Checkout auf der Passwortseite.
+
+## Länder und Währungen
+
+Die Website erkennt das Land des Besuchers (auf Vercel über die Verbindung; zum Testen mit dem Cookie `soymonde-country`, z. B. `TR`) und zeigt Preise, Warenkorb und Checkout in der Währung des passenden Shopify-Markts: Schweiz CHF, EU EUR, Türkei TRY. Die Umrechnung macht Shopify (Einstellungen → Märkte). Die Preise in `content/products.ts` sind die CHF-Grundpreise.

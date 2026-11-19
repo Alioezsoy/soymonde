@@ -1,14 +1,16 @@
 // Turns the bag into a Shopify cart and returns the address of the
 // Shopify checkout. The bag only holds piece + size; the matching Shopify
 // variant is looked up here by the piece's handle and the size name.
+import type { NextRequest } from "next/server";
 import { getProduct } from "@/content/products";
+import { countryOf } from "@/lib/country";
 import { storefront } from "@/lib/shopify-storefront";
 
 type Line = { handle?: unknown; size?: unknown; quantity?: unknown };
 
 const LANGUAGES = { en: "EN", de: "DE", tr: "TR" } as const;
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   let body: { lines?: Line[]; lang?: unknown };
   try {
     body = await request.json();
@@ -27,6 +29,7 @@ export async function POST(request: Request) {
     .filter((l) => getProduct(l.handle) && l.size && l.quantity > 0)
     .slice(0, 30);
   if (!lines.length) return Response.json({ error: "empty" }, { status: 400 });
+  const country = countryOf(request);
   const language = LANGUAGES[body.lang as keyof typeof LANGUAGES] ?? "EN";
 
   try {
@@ -76,9 +79,9 @@ export async function POST(request: Request) {
         cartCreate(input: $input) { cart { checkoutUrl } userErrors { message } }
       }`,
       {
-        input: { lines: cartLines, buyerIdentity: { countryCode: "CH" } },
+        input: { lines: cartLines, buyerIdentity: { countryCode: country } },
         language,
-        country: "CH",
+        country,
       },
     );
     const url = created.cartCreate.cart?.checkoutUrl;
